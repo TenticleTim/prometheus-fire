@@ -1,0 +1,53 @@
+name: 'Prometheus Governance PR Review'
+description: >
+  Runs prometheus review on every pull request and posts inline findings as
+  review comments — BLOCKER and HIGH violations block the merge check.
+  Powered by Holley Studios.
+author: 'Holley Studios'
+
+branding:
+  icon: 'shield'
+  color: 'blue'
+
+inputs:
+  github-token:
+    description: >
+      GitHub token used to post review comments and read PR files.
+      The default ${{ github.token }} works in most cases.
+      Requires pull-requests: write and contents: read.
+    required: false
+    default: ${{ github.token }}
+
+  fail-on-severity:
+    description: >
+      Fail the CI check when findings at this severity or above are present.
+      Accepts: BLOCKER | HIGH | MEDIUM | LOW | TECH_DEBT | none
+      Set to "none" to always exit 0 (report-only mode).
+    required: false
+    default: 'BLOCKER'
+
+  post-inline-comments:
+    description: >
+      Post inline review comments on the diff for findings with line numbers.
+      Set to "false" to disable inline comments and use summary only.
+    required: false
+    default: 'true'
+
+  update-summary:
+    description: >
+      Post (or update) a summary comment on the PR showing all findings.
+      On re-runs the existing comment is edited, not duplicated.
+    required: false
+    default: 'true'
+
+outputs:
+  finding-count:
+    description: 'Total number of findings found.'
+  blocker-count:
+    description: 'Number of BLOCKER-severity findings.'
+  health-grade:
+    description: 'Governance health grade (A+, A, B, C, D, F) if report.json is present.'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

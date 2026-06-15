@@ -6,8 +6,12 @@
   "author": "Matt Holley",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mattholley/prometheus-helper.git",
+    "url": "https://github.com/TenticleTim/prometheus-helper.git",
     "directory": "prometheus"
+  },
+  "homepage": "https://github.com/TenticleTim/prometheus-helper#readme",
+  "bugs": {
+    "url": "https://github.com/TenticleTim/prometheus-helper/issues"
   },
   "keywords": [
     "governance",
@@ -21,7 +25,9 @@
     "cursor",
     "copilot",
     "adapters",
-    "security"
+    "security",
+    "linting",
+    "dx"
   ],
   "type": "module",
   "main": "./dist/index.js",
@@ -30,7 +36,8 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./config.schema.json": "./config.schema.json"
   },
   "bin": {
     "prometheus": "./dist/cli.js"
@@ -38,7 +45,9 @@
   "files": [
     "dist/",
     "catalog/",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md",
+    "config.schema.json"
   ],
   "engines": {
     "node": ">=18"
@@ -46,9 +55,13 @@
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build && npm test",
+    "prepublishOnly": "npm run typecheck && npm run build && npm test",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run build && changeset publish",
     "prometheus:init": "vite-node bin/cli.ts init",
     "prometheus:scan": "vite-node bin/cli.ts scan",
     "prometheus:review": "vite-node bin/cli.ts review",
@@ -79,9 +92,11 @@
     "prometheus:update": "vite-node bin/cli.ts update"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.10",
     "@types/node": "^20.14.0",
+    "@vitest/coverage-v8": "^4.1.8",
     "tsup": "^8.5.1",
     "typescript": "^5.4.5",
-    "vitest": "^1.6.0"
+    "vitest": "^4.1.8"
   }
 }

@@ -26,6 +26,8 @@ import { cmdHealth } from './commands/health.ts';
 import { cmdCiGate } from './commands/ci-gate.ts';
 import { cmdFix } from './commands/fix.ts';
 import { cmdUpdate } from './commands/update.ts';
+import { cmdHooks } from './commands/hooks.ts';
+import { cmdWatch } from './commands/watch.ts';
 
 const COMMANDS: Record<string, (argv: string[]) => Promise<void>> = {
   init: cmdInit,
@@ -49,6 +51,11 @@ const COMMANDS: Record<string, (argv: string[]) => Promise<void>> = {
   ci: cmdCiGate,
   fix: cmdFix,
   update: cmdUpdate,
+  watch: cmdWatch,
+  'hooks': (argv) => cmdHooks(['install', ...argv]),
+  'hooks:install':   (argv) => cmdHooks(['install',   ...argv]),
+  'hooks:uninstall': (argv) => cmdHooks(['uninstall', ...argv]),
+  'hooks:status':    (argv) => cmdHooks(['status',    ...argv]),
   'catalog:list': (argv) => cmdCatalog(['list', ...argv]),
   'catalog:validate': (argv) => cmdCatalog(['validate', ...argv]),
   'catalog:enable': (argv) => cmdCatalog(['enable', ...argv]),
@@ -70,9 +77,19 @@ Prometheus — AI Repo Governance
 
 SETUP
   init                     Scaffold .prometheus/ governance folder
+  init --interactive        Interactive wizard — detect framework, pick adapters, configure CI
   scan                     Analyse repo structure → .prometheus/report.json
   adapters                 Regenerate all AI adapter files (CLAUDE.md, etc.)
   update                   Convenience: scan + adapters + drift check in one command
+  watch                    Real-time review — re-runs on every file change
+    --clear                  Clear terminal on each update
+    --debounce=<ms>          Debounce delay (default: 400ms)
+
+HOOKS  (governance checks in git hooks — no extra dependencies)
+  hooks install            Install pre-commit + pre-push hooks in .git/hooks/
+  hooks install --husky    Install in .husky/ (committed, team-wide)
+  hooks uninstall          Remove prometheus blocks from hooks
+  hooks status             Show current hook state
 
 REVIEW & VALIDATE
   review                   Run all rules, print findings

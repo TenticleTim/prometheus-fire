@@ -1,0 +1,159 @@
+{
+  "name": "prometheus-governance",
+  "displayName": "Prometheus Governance",
+  "description": "Real-time AI repo governance — inline findings, health scores, and adapter sync for Claude, Gemini, Cursor, Copilot, and Codex.",
+  "version": "1.0.0",
+  "publisher": "holley-studios",
+  "author": {
+    "name": "Holley Studios"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TenticleTim/prometheus-helper.git",
+    "directory": "extensions/vscode"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "governance",
+    "AI",
+    "Claude",
+    "Cursor",
+    "linter",
+    "code review",
+    "security",
+    "Gemini",
+    "Copilot"
+  ],
+  "activationEvents": [
+    "workspaceContains:.prometheus/config.json"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "prometheus.scan",
+        "title": "Scan Repository",
+        "category": "Prometheus",
+        "icon": "$(search)"
+      },
+      {
+        "command": "prometheus.reviewFile",
+        "title": "Review Current File",
+        "category": "Prometheus",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "prometheus.health",
+        "title": "Show Health Score",
+        "category": "Prometheus",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "prometheus.adapters",
+        "title": "Regenerate AI Adapters",
+        "category": "Prometheus",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "prometheus.openConfig",
+        "title": "Open Config",
+        "category": "Prometheus",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "prometheus.refreshFindings",
+        "title": "Refresh Findings",
+        "category": "Prometheus",
+        "icon": "$(refresh)"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "prometheus.findingsView",
+          "name": "Prometheus Findings",
+          "icon": "$(shield)",
+          "contextualTitle": "Prometheus Governance",
+          "when": "prometheus.active"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "prometheus.refreshFindings",
+          "when": "view == prometheus.findingsView",
+          "group": "navigation"
+        },
+        {
+          "command": "prometheus.health",
+          "when": "view == prometheus.findingsView",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "prometheus.reviewFile",
+          "when": "editorIsOpen"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Prometheus Governance",
+      "properties": {
+        "prometheus.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Prometheus Governance."
+        },
+        "prometheus.runOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Re-run review on every file save."
+        },
+        "prometheus.debounceMs": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 200,
+          "maximum": 10000,
+          "description": "Milliseconds to debounce before re-analysing after a file save."
+        },
+        "prometheus.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show governance health in the status bar."
+        },
+        "prometheus.binaryPath": {
+          "type": "string",
+          "default": "",
+          "description": "Absolute path to the prometheus binary. Leave empty to auto-detect from node_modules/.bin or PATH."
+        },
+        "prometheus.autoScan": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically run 'prometheus scan' on activation when report.json is missing."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.24.0",
+    "esbuild": "^0.20.2",
+    "typescript": "^5.4.5"
+  }
+}

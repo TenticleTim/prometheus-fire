@@ -15,15 +15,23 @@ import { writePrometheusDir, type InitFileResult } from '../../init.ts';
 import { runScanner } from '../../scanner/index.ts';
 import { loadCatalogProfile, loadBuiltInCatalog } from '../../catalog.ts';
 import { REGISTRY_PATH } from '../../registry.ts';
+import { runInteractiveInit } from '../../interactive-init.ts';
 
 export async function cmdInit(argv: string[]): Promise<void> {
   const { root, config } = createContext();
   const { flags } = parseArgs(argv);
 
-  const dryRun = flag(flags, 'dry-run');
-  const json = flag(flags, 'json');
-  const markdown = flag(flags, 'markdown');
-  const profileId = flagVal(flags, 'profile');
+  const dryRun      = flag(flags, 'dry-run');
+  const json        = flag(flags, 'json');
+  const markdown    = flag(flags, 'markdown');
+  const profileId   = flagVal(flags, 'profile');
+  const interactive = flag(flags, 'interactive') || flag(flags, 'i');
+
+  // Interactive wizard mode
+  if (interactive) {
+    await runInteractiveInit(root, config, { dryRun });
+    return;
+  }
 
   // Optional: run a quick scan to populate architecture files.
   // If it fails (e.g. in a temp dir), init still proceeds with placeholders.

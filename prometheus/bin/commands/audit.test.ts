@@ -19,7 +19,6 @@ const FAILING_CHECKS: DoctorCheck[] = [
 
 const FINDINGS: Finding[] = [
   {
-    rule: 'large_file',
     severity: 'HIGH',
     category: 'Large Files',
     file: 'app/api/monster/route.ts',

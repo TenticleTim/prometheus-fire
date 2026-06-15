@@ -1,0 +1,9 @@
+**/.git/**
+**/.DS_Store
+**/node_modules/**
+src/**
+esbuild.mjs
+tsconfig.json
+*.map
+.eslintrc*
+.prettierrc*

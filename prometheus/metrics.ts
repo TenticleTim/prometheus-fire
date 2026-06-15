@@ -112,6 +112,8 @@ export interface MetricsSnapshot {
   baselineFindings: number;
   driftEvents: number;
   findingsBySeverity: MetricsBySeverity;
+  agentCount?: number;
+  skillCount?: number;
 }
 
 // ── Pure computation ──────────────────────────────────────────────────────────
@@ -218,7 +220,7 @@ export function collectMetricsForRoot(root: string, config: PrometheusConfig): P
   const driftFindings = runDriftForRoot(root, config);
   let registry: ResolvedRegistry | null = null;
   try {
-    registry = loadAndResolveRegistry(root, config);
+    registry = loadAndResolveRegistry(root);
   } catch {
     registry = null;
   }

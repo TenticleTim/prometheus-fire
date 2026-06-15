@@ -641,7 +641,7 @@ describe('checkReportStaleness', () => {
 
   it('does not flag report.missing when report.json exists and is fresh', () => {
     const report = { generatedAt: '2025-01-01T00:00:00Z' };
-    const files = {
+    const files: Record<string, string> = {
       ...baseFiles,
       '.prometheus/report.json': JSON.stringify(report),
     };
@@ -665,7 +665,7 @@ describe('checkReportStaleness', () => {
 
   it('flags report.stale when report.json is older than reportMaxAgeDays', () => {
     const report = { generatedAt: '2025-01-01T00:00:00Z' };
-    const files = {
+    const files: Record<string, string> = {
       ...baseFiles,
       '.prometheus/report.json': JSON.stringify(report),
     };
@@ -690,7 +690,7 @@ describe('checkReportStaleness', () => {
   });
 
   it('flags report.stale when report.json has no generatedAt', () => {
-    const files = {
+    const files: Record<string, string> = {
       ...baseFiles,
       '.prometheus/report.json': JSON.stringify({ scanVersion: '1.0.0' }),
     };

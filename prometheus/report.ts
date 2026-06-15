@@ -7,7 +7,9 @@
  * 3. All generated arrays are sorted by stable keys before writing.
  * 4. Running twice with the same input → byte-for-byte identical output.
  */
-import type { PageRoute, ApiRoute, LargeFile } from './types';
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import type { PageRoute, ApiRoute, LargeFile, ScanResult } from './types';
 
 export const GENERATED_SECTIONS = ['scan', 'routes'] as const;
 
@@ -123,6 +125,19 @@ function sortLargeFiles(arr: LargeFile[]): LargeFile[] {
     const lineDiff = b.lines - a.lines;
     return lineDiff !== 0 ? lineDiff : a.file.localeCompare(b.file);
   });
+}
+
+/**
+ * Load and parse .prometheus/report.json. Returns null if missing or unparseable.
+ */
+export function loadReport(root: string): ScanResult | null {
+  const reportPath = join(root, '.prometheus', 'report.json');
+  if (!existsSync(reportPath)) return null;
+  try {
+    return JSON.parse(readFileSync(reportPath, 'utf8')) as ScanResult;
+  } catch {
+    return null;
+  }
 }
 
 /**

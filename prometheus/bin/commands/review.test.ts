@@ -13,7 +13,7 @@ const BASE_SCAN: ScanResult = {
   _generatedSections: [],
   generatedAt: '2026-01-01T00:00:00.000Z',
   scanVersion: '1',
-  pages: [{ route: '/', file: 'app/page.tsx', auth: false }],
+  pages: [{ path: '/', file: 'app/page.tsx', desc: '' }],
   apiRoutes: [],
   componentCount: 5,
   sharedUiFiles: [],

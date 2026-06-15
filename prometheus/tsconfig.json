@@ -6,6 +6,8 @@
     "lib": ["ES2022"],
     "strict": true,
     "skipLibCheck": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "declaration": true,
     "declarationMap": true,
     "outDir": "./dist",

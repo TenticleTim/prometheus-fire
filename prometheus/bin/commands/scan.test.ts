@@ -9,12 +9,12 @@ const SCAN: ScanResult = {
   generatedAt: '2026-01-01T00:00:00.000Z',
   scanVersion: '1',
   pages: [
-    { route: '/', file: 'app/page.tsx', auth: false },
-    { route: '/dashboard', file: 'app/dashboard/page.tsx', auth: true },
+    { path: '/', file: 'app/page.tsx', desc: '' },
+    { path: '/dashboard', file: 'app/dashboard/page.tsx', desc: '' },
   ],
   apiRoutes: [
-    { route: '/api/users', file: 'app/api/users/route.ts', methods: ['GET', 'POST'], auth: true },
-    { route: '/api/public', file: 'app/api/public/route.ts', methods: ['POST'], auth: false },
+    { path: '/api/users', file: 'app/api/users/route.ts', methods: ['GET', 'POST'], auth: true, desc: '' },
+    { path: '/api/public', file: 'app/api/public/route.ts', methods: ['POST'], auth: false, desc: '' },
   ],
   componentCount: 42,
   sharedUiFiles: ['components/ui/Button.tsx', 'components/ui/Input.tsx'],
