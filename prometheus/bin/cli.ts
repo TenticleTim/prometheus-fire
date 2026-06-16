@@ -28,6 +28,7 @@ import { cmdFix } from './commands/fix.ts';
 import { cmdUpdate } from './commands/update.ts';
 import { cmdHooks } from './commands/hooks.ts';
 import { cmdWatch } from './commands/watch.ts';
+import { cmdReport } from './commands/report.ts';
 
 const COMMANDS: Record<string, (argv: string[]) => Promise<void>> = {
   init: cmdInit,
@@ -50,6 +51,7 @@ const COMMANDS: Record<string, (argv: string[]) => Promise<void>> = {
   health: cmdHealth,
   ci: cmdCiGate,
   fix: cmdFix,
+  report: cmdReport,
   update: cmdUpdate,
   watch: cmdWatch,
   'hooks': (argv) => cmdHooks(['install', ...argv]),
@@ -97,7 +99,16 @@ REVIEW & VALIDATE
     --base=<branch>          Only check files changed vs. <branch>
     --no-baseline            Ignore baseline when computing exit code
   validate --json          Machine-readable findings
+  validate --sarif         SARIF 2.1.0 output (GitHub Code Scanning, VS Code, JetBrains)
   validate --markdown      Markdown summary for PR comments
+
+REPORT
+  report                   Generate a visual governance report
+  report --html            Self-contained HTML report (default)
+  report --out=<path>      Write to file (default: .prometheus/report.html)
+  report --open            Open in browser after writing
+  report --json            Machine-readable findings JSON
+  report --markdown        Markdown summary
 
 BASELINES  (suppress known debt, focus CI on new issues)
   baseline:create          Snapshot current findings as baseline

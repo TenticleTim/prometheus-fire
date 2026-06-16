@@ -1,0 +1,24 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "prometheus/ai-strict",
+  "version": "1.0.0",
+  "description": "Maximum governance for AI-heavy codebases. Every BLOCKER and HIGH is a merge gate. For teams where 50%+ of code is AI-generated.",
+  "failOnSeverity": ["BLOCKER", "HIGH"],
+  "warnOnSeverity": ["MEDIUM"],
+  "largeFileThreshold": 250,
+  "reportMaxAgeDays": 7,
+  "disabledRules": [],
+  "severityRules": [
+    { "category": "vibe_csrf_missing",          "severity": "BLOCKER" },
+    { "category": "vibe_ssrf",                  "severity": "BLOCKER" },
+    { "category": "vibe_no_rate_limit",         "severity": "BLOCKER" },
+    { "category": "vibe_cors_wildcard",         "severity": "BLOCKER" },
+    { "category": "vibe_missing_input_validation", "severity": "BLOCKER" },
+    { "category": "vibe_ai_endpoint_no_auth",   "severity": "BLOCKER" },
+    { "category": "vibe_prompt_injection_risk", "severity": "BLOCKER" },
+    { "category": "vibe_insecure_direct_object","severity": "BLOCKER" },
+    { "category": "slop_phantom_import",        "severity": "BLOCKER" },
+    { "category": "slop_known_phantom_list",    "severity": "BLOCKER" },
+    { "category": "slop_undeclared_import",     "severity": "BLOCKER" }
+  ]
+}

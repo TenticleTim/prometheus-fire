@@ -38,6 +38,8 @@ import { STATE_RULES } from './state';
 import { FORM_RULES } from './forms';
 import { LOG_RULES } from './logging';
 import { CSS_RULES } from './css';
+import { VIBE_CODING_RULES } from './vibe-coding';
+import { SLOPSQUATTING_RULES } from './slopsquatting';
 
 // ── Local helpers (used inside detect() methods) ──────────────────────────────
 
@@ -605,4 +607,7 @@ export const PROMETHEUS_RULES: PrometheusRule[] = [
   ...FORM_RULES,
   ...LOG_RULES,
   ...CSS_RULES,
+  // ── AI-era additions ──────────────────────────────────────────────────────
+  ...VIBE_CODING_RULES,
+  ...SLOPSQUATTING_RULES,
 ];

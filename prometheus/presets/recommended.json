@@ -1,0 +1,12 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "prometheus/recommended",
+  "version": "1.0.0",
+  "description": "Balanced preset for production TypeScript projects. Blocks on security and correctness; warns on quality.",
+  "failOnSeverity": ["BLOCKER"],
+  "warnOnSeverity": ["HIGH"],
+  "largeFileThreshold": 350,
+  "reportMaxAgeDays": 30,
+  "disabledRules": [],
+  "severityRules": []
+}

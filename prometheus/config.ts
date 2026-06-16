@@ -1,7 +1,42 @@
 import { readFileSync, existsSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, dirname, resolve } from 'node:path';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
 import type { PrometheusConfig } from './types';
 import { PROMETHEUS_RULES } from './rules/registry';
+
+// Resolve built-in preset JSON files shipped with the package
+const _require = createRequire(import.meta.url ?? 'file://' + __filename);
+
+function resolvePreset(extendsValue: string): Record<string, unknown> {
+  // Built-in presets: "prometheus/recommended", "prometheus/ai-strict", "prometheus/vibe-coding"
+  const BUILTIN_PRESETS: Record<string, string> = {
+    'prometheus/recommended':  join(dirname(fileURLToPath(import.meta.url ?? 'file://' + __filename)), 'presets', 'recommended.json'),
+    'prometheus/ai-strict':    join(dirname(fileURLToPath(import.meta.url ?? 'file://' + __filename)), 'presets', 'ai-strict.json'),
+    'prometheus/vibe-coding':  join(dirname(fileURLToPath(import.meta.url ?? 'file://' + __filename)), 'presets', 'vibe-coding.json'),
+  };
+
+  const builtinPath = BUILTIN_PRESETS[extendsValue];
+  if (builtinPath && existsSync(builtinPath)) {
+    try { return JSON.parse(readFileSync(builtinPath, 'utf8')) as Record<string, unknown>; } catch { /* fall through */ }
+  }
+
+  // Relative or absolute path
+  if (extendsValue.startsWith('.') || extendsValue.startsWith('/')) {
+    try {
+      const abs = resolve(extendsValue);
+      if (existsSync(abs)) return JSON.parse(readFileSync(abs, 'utf8')) as Record<string, unknown>;
+    } catch { /* fall through */ }
+  }
+
+  // npm package (e.g. "@myorg/prometheus-rules")
+  try {
+    return _require(extendsValue) as Record<string, unknown>;
+  } catch { /* fall through */ }
+
+  console.warn(`[prometheus] Warning: could not resolve preset "${extendsValue}" — skipping`);
+  return {};
+}
 
 export const CONFIG_DEFAULTS: PrometheusConfig = {
   name: 'Prometheus',
@@ -79,6 +114,13 @@ export function loadConfig(
         console.error('[prometheus] Warning: could not parse .prometheus/config.json — using defaults');
       }
     }
+  }
+
+  // Apply extends preset (shallow merge: preset is the base, local config overrides)
+  if (typeof raw.extends === 'string') {
+    const preset = resolvePreset(raw.extends);
+    const { extends: _ext, ...localOverrides } = raw;
+    raw = { ...preset, ...localOverrides };
   }
 
   // Deep merge: scalars from raw override defaults; arrays from raw replace defaults

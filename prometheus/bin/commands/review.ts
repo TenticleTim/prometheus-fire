@@ -18,6 +18,7 @@ import {
   formatFindingsConsole,
   formatFindingsMarkdown,
   formatFindingsJson,
+  formatFindingsSarif,
 } from '../../review.ts';
 import { shouldWarn } from '../../severity.ts';
 import { getActiveRules } from '../../packs.ts';
@@ -27,6 +28,7 @@ export async function cmdReview(argv: string[]): Promise<void> {
   const { flags, positionals } = parseArgs(argv);
   const json = flag(flags, 'json');
   const markdown = flag(flags, 'markdown');
+  const sarif = flag(flags, 'sarif');
   const base = flagVal(flags, 'base');
 
   const scan = loadReport(root);
@@ -49,6 +51,11 @@ export async function cmdReview(argv: string[]): Promise<void> {
 
   if (json) {
     process.stdout.write(formatFindingsJson(findings));
+    return;
+  }
+
+  if (sarif) {
+    process.stdout.write(formatFindingsSarif(findings));
     return;
   }
 

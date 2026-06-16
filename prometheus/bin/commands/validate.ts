@@ -18,6 +18,7 @@ import {
   formatFindingsConsole,
   formatFindingsMarkdown,
   formatFindingsJson,
+  formatFindingsSarif,
 } from '../../review.ts';
 import { exitCodeFor, shouldWarn } from '../../severity.ts';
 import { loadBaseline, partitionFindings } from '../../baseline.ts';
@@ -28,6 +29,7 @@ export async function cmdValidate(argv: string[]): Promise<void> {
   const { flags, positionals } = parseArgs(argv);
   const json = flag(flags, 'json');
   const markdown = flag(flags, 'markdown');
+  const sarif = flag(flags, 'sarif');
   const base = flagVal(flags, 'base');
   const noBaseline = flag(flags, 'no-baseline');
 
@@ -62,6 +64,12 @@ export async function cmdValidate(argv: string[]): Promise<void> {
       const suppressed = allFindings.length - findings.length;
       if (suppressed > 0) process.stderr.write(`(${suppressed} baseline findings suppressed)\n`);
     }
+    process.exit(exitCode);
+    return;
+  }
+
+  if (sarif) {
+    process.stdout.write(formatFindingsSarif(findings));
     process.exit(exitCode);
     return;
   }
