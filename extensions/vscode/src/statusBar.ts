@@ -82,6 +82,26 @@ export class StatusBarManager implements vscode.Disposable {
     );
   }
 
+  showAutopilotSession(taskLabel: string, cancelling: boolean): void {
+    if (cancelling) {
+      this.item.text = `$(stop-circle) Autopilot: cancelling…`;
+      this.item.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
+    } else {
+      this.item.text = `$(sync~spin) Autopilot: ${taskLabel}`;
+      this.item.backgroundColor = new vscode.ThemeColor('statusBarItem.prominentBackground');
+    }
+    this.item.command = 'prometheus.autopilot.cancel';
+    this.item.tooltip = cancelling
+      ? 'Autopilot cancelling — click to view session'
+      : `Autopilot running — click to cancel`;
+  }
+
+  clearAutopilotSession(): void {
+    this.item.command = 'prometheus.health';
+    this.item.tooltip = 'Prometheus Governance — click to view health score';
+    this.item.backgroundColor = undefined;
+  }
+
   showInactive(): void {
     this.item.text = '$(shield) Prometheus';
     this.item.tooltip = 'Prometheus Governance';

@@ -15,22 +15,25 @@
 
 import * as vscode from 'vscode';
 import { join } from 'node:path';
-import { existsSync } from 'node:fs';
+import { existsSync, writeFileSync } from 'node:fs';
 
 import {
   runScan,
   runHealth,
   runAdapters,
+  runPrometheus,
   PrometheusNotFoundError,
   PrometheusReportMissingError,
 } from './runner.js';
 import { HealthPanel } from './panel.js';
 import type { ExtensionConfig } from './types.js';
+import type { AutopilotWatcher } from './autopilotWatcher.js';
 
 // ── Callback types (supplied by extension.ts) ─────────────────────────────────
 
 export type RefreshCallback = () => Promise<void>;
 export type ReviewFileCallback = (uri: vscode.Uri) => Promise<void>;
+export type GetAutopilotWatcher = () => AutopilotWatcher;
 
 // ── Helper ────────────────────────────────────────────────────────────────────
 
@@ -73,6 +76,7 @@ export function registerCommands(
   getConfig: () => ExtensionConfig,
   onRefresh: RefreshCallback,
   onReviewFile: ReviewFileCallback,
+  getAutopilotWatcher: GetAutopilotWatcher,
 ): vscode.Disposable {
   const disposables: vscode.Disposable[] = [];
 
@@ -214,6 +218,157 @@ export function registerCommands(
         await onRefresh();
       } catch (err) {
         handleError(err);
+      }
+    }),
+  );
+
+  // ── prometheus.autopilot.generate ──────────────────────────────────────────
+
+  disposables.push(
+    vscode.commands.registerCommand('prometheus.autopilot.generate', async () => {
+      const goal = await vscode.window.showInputBox({
+        prompt: 'Describe what you want to build',
+        placeHolder: 'e.g. add Stripe checkout to the Express app',
+        ignoreFocusOut: true,
+      });
+      if (!goal) return;
+
+      const terminal = vscode.window.createTerminal({
+        name: 'Prometheus Autopilot',
+        cwd: workspaceRoot,
+      });
+      terminal.sendText(`prometheus autopilot generate "${goal.replace(/"/g, '\\"')}"`);
+      terminal.show();
+
+      void vscode.window.showInformationMessage(
+        'Prometheus Autopilot: Generating plan in terminal. Answer the clarifying questions, then validate with: prometheus autopilot validate MASTER_PLAN.md',
+      );
+    }),
+  );
+
+  // ── prometheus.autopilot.cancel ────────────────────────────────────────────
+
+  disposables.push(
+    vscode.commands.registerCommand('prometheus.autopilot.cancel', async () => {
+      const session = getAutopilotWatcher().session;
+      if (!session) {
+        void vscode.window.showWarningMessage('Prometheus Autopilot: No active session to cancel.');
+        return;
+      }
+
+      const confirm = await vscode.window.showWarningMessage(
+        `Cancel autopilot session "${session.planSlug}"? The current task will complete before stopping.`,
+        { modal: true },
+        'Cancel Session',
+      );
+      if (confirm !== 'Cancel Session') return;
+
+      // Create the cancel sentinel file
+      const cancelPath = join(workspaceRoot, '.prometheus', 'autopilot', '.cancel');
+      try {
+        writeFileSync(cancelPath, '', 'utf8');
+        void vscode.window.showInformationMessage(
+          'Prometheus Autopilot: Cancel signal sent. Session will stop after the current task.',
+        );
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        void vscode.window.showErrorMessage(`Prometheus Autopilot: Could not create cancel sentinel: ${msg}`);
+      }
+    }),
+  );
+
+  // ── prometheus.autopilot.review ────────────────────────────────────────────
+
+  disposables.push(
+    vscode.commands.registerCommand('prometheus.autopilot.review', async () => {
+      const session = getAutopilotWatcher().session;
+      if (!session) {
+        void vscode.window.showWarningMessage(
+          'Prometheus Autopilot: No active session. Provide a session ID in the terminal: prometheus autopilot review <id>',
+        );
+        return;
+      }
+
+      const cfg = vscode.workspace.getConfiguration('prometheus');
+      const baseBranch = cfg.get<string>('autopilot.baseBranch', 'main');
+
+      const terminal = vscode.window.createTerminal({
+        name: 'Prometheus Review',
+        cwd: workspaceRoot,
+      });
+      terminal.sendText(`prometheus autopilot review ${session.id} --base=${baseBranch}`);
+      terminal.show();
+    }),
+  );
+
+  // ── prometheus.autopilot.openPR ────────────────────────────────────────────
+
+  disposables.push(
+    vscode.commands.registerCommand('prometheus.autopilot.openPR', async () => {
+      const session = getAutopilotWatcher().session;
+      if (!session) {
+        void vscode.window.showWarningMessage('Prometheus Autopilot: No active session.');
+        return;
+      }
+
+      const terminal = vscode.window.createTerminal({
+        name: 'Prometheus PR',
+        cwd: workspaceRoot,
+      });
+      terminal.sendText(`prometheus autopilot open-pr ${session.id}`);
+      terminal.show();
+    }),
+  );
+
+  // ── prometheus.autopilot.viewJournal ──────────────────────────────────────
+
+  disposables.push(
+    vscode.commands.registerCommand('prometheus.autopilot.viewJournal', async () => {
+      const session = getAutopilotWatcher().session;
+      if (!session) {
+        void vscode.window.showWarningMessage('Prometheus Autopilot: No active session.');
+        return;
+      }
+
+      if (!existsSync(session.journalPath)) {
+        void vscode.window.showWarningMessage(
+          `Prometheus Autopilot: Journal not found at ${session.journalPath}`,
+        );
+        return;
+      }
+
+      const doc = await vscode.workspace.openTextDocument(
+        vscode.Uri.file(session.journalPath),
+      );
+      await vscode.window.showTextDocument(doc, { preview: true });
+    }),
+  );
+
+  // ── prometheus.autopilot.revert ────────────────────────────────────────────
+
+  disposables.push(
+    vscode.commands.registerCommand('prometheus.autopilot.revert', async () => {
+      const session = getAutopilotWatcher().session;
+      if (!session) {
+        void vscode.window.showWarningMessage('Prometheus Autopilot: No active session to revert.');
+        return;
+      }
+
+      const confirm = await vscode.window.showWarningMessage(
+        `Revert session "${session.planSlug}"? This deletes branch "${session.branch}" and cannot be undone.`,
+        { modal: true },
+        'Revert and Delete Branch',
+      );
+      if (confirm !== 'Revert and Delete Branch') return;
+
+      try {
+        await runPrometheus(workspaceRoot, ['autopilot', 'revert', session.id]);
+        void vscode.window.showInformationMessage(
+          `Prometheus Autopilot: Session reverted. Branch "${session.branch}" deleted. main is unchanged.`,
+        );
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        void vscode.window.showErrorMessage(`Prometheus Autopilot: Revert failed: ${msg}`);
       }
     }),
   );

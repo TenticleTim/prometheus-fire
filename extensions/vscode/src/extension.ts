@@ -24,6 +24,8 @@ import { relative } from 'node:path';
 import { DiagnosticsManager } from './diagnostics.js';
 import { StatusBarManager } from './statusBar.js';
 import { FindingsTreeProvider } from './treeView.js';
+import { AutopilotWatcher } from './autopilotWatcher.js';
+import { AutopilotTreeProvider } from './autopilotView.js';
 import { registerCommands } from './commands.js';
 import { PrometheusHoverProvider } from './hover.js';
 import { PrometheusCodeActionProvider } from './codeAction.js';
@@ -59,6 +61,8 @@ class PrometheusExtension implements vscode.Disposable {
   private readonly diagnostics: DiagnosticsManager;
   private readonly statusBar: StatusBarManager;
   private readonly treeProvider: FindingsTreeProvider;
+  private readonly autopilotWatcher: AutopilotWatcher;
+  private readonly autopilotView: AutopilotTreeProvider;
 
   private workspaceRoot: string;
   private allFindings: Finding[] = [];
@@ -73,20 +77,47 @@ class PrometheusExtension implements vscode.Disposable {
     this.diagnostics = new DiagnosticsManager();
     this.statusBar = new StatusBarManager();
     this.treeProvider = new FindingsTreeProvider();
+    this.autopilotWatcher = new AutopilotWatcher(workspaceRoot);
+    this.autopilotView = new AutopilotTreeProvider(workspaceRoot, this.autopilotWatcher);
 
-    this.disposables.push(this.diagnostics, this.statusBar, this.treeProvider);
+    this.disposables.push(
+      this.diagnostics,
+      this.statusBar,
+      this.treeProvider,
+      this.autopilotWatcher,
+      this.autopilotView,
+    );
+
+    // Update status bar when autopilot session state changes
+    this.autopilotWatcher.onDidChange((session) => {
+      if (!session) {
+        this.statusBar.clearAutopilotSession();
+        return;
+      }
+      const completed = session.completedTaskIndexes.length;
+      const total = completed + session.blockedTasks.length + session.timedOutTaskIndexes.length;
+      const taskLabel = `${completed}/${total > 0 ? total : '?'} tasks`;
+      this.statusBar.showAutopilotSession(taskLabel, this.autopilotWatcher.isCancelling);
+    });
   }
 
   async activate(): Promise<void> {
     const cfg = readConfig();
     if (!cfg.enable) return;
 
-    // Register tree view
+    // Register findings tree view
     const treeView = vscode.window.createTreeView('prometheus.findingsView', {
       treeDataProvider: this.treeProvider,
       showCollapseAll: true,
     });
     this.disposables.push(treeView);
+
+    // Register autopilot tree view
+    const autopilotTreeView = vscode.window.createTreeView('prometheus.autopilotView', {
+      treeDataProvider: this.autopilotView,
+      showCollapseAll: false,
+    });
+    this.disposables.push(autopilotTreeView);
 
     // Set context flag so tree view & menus are visible
     await vscode.commands.executeCommand(
@@ -102,6 +133,7 @@ class PrometheusExtension implements vscode.Disposable {
       readConfig,
       () => this.runFullReview(),
       (uri) => this.reviewSingleFile(uri),
+      () => this.autopilotWatcher,
     );
     this.disposables.push(commands);
 

@@ -3,142 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prometheus — AI Code Governance | 757 Rules for Claude, Cursor & Copilot</title>
-  <meta name="description" content="Prometheus catches what AI misses. 757 governance rules for prompt injection, N+1 queries, missing validation, and 30+ more AI failure patterns. CLI, GitHub Action, and VS Code extension. Zero config." />
-  <meta name="keywords" content="AI code governance, AI code review, Claude code rules, Cursor rules, GitHub Copilot governance, prompt injection detection, vibe coding safety, TypeScript security, code review automation, AI safety, LLM code quality, prometheus-governance, npm package, CI code review" />
+  <title>Prometheus — AI Code Governance | 757 Rules + Autopilot for Claude, Cursor & Copilot</title>
+  <meta name="description" content="Prometheus catches what AI misses — and now executes entire features autonomously. 757 governance rules, Autopilot plan execution, natural language plan generation, and AI-reviewed diffs. Zero config." />
+  <meta name="keywords" content="AI code governance, AI autopilot coding, Claude code rules, Cursor rules, GitHub Copilot governance, prompt injection detection, vibe coding safety, TypeScript security, code review automation, AI safety, LLM code quality, prometheus-governance, npm package, CI code review, autonomous AI coding" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#050408" />
   <meta name="author" content="Holley Studios" />
 
-  <!-- ── Canonical ──────────────────────────────────────────────────── -->
   <link rel="canonical" href="https://github.com/TenticleTim/prometheus-fire" />
 
-  <!-- ── Favicon ────────────────────────────────────────────────────── -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 90'%3E%3Cpath d='M40 4 C62 4 72 14 72 25 L72 48 Q72 70 40 86 Q8 70 8 48 L8 25 C8 14 18 4 40 4 Z' stroke='%23C9A84C' stroke-width='2.8' fill='none'/%3E%3Cpath d='M40 39 C36 32 31 25 34 15 C36 10 39 8 37 5 C45 10 47 22 42 31 C47 23 48 14 45 9 C52 20 50 32 44 39 Z' fill='%23F5C842'/%3E%3C/svg%3E" />
 
-  <!-- ── Open Graph ──────────────────────────────────────────────────── -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Prometheus Governance" />
-  <meta property="og:title" content="Prometheus — AI Code Governance | 757 Rules" />
-  <meta property="og:description" content="Catches what AI misses. 757 governance rules for prompt injection, N+1 queries, missing validation, and 30+ more AI failure patterns. Zero config. Works with Claude, Cursor, Copilot, and Gemini." />
+  <meta property="og:title" content="Prometheus — AI Code Governance + Autopilot | 757 Rules" />
+  <meta property="og:description" content="Catches what AI misses. 757 governance rules + Autopilot execution. Generate plans in natural language, execute autonomously, review your own diffs. Zero config." />
   <meta property="og:url" content="https://github.com/TenticleTim/prometheus-fire" />
   <meta property="og:image" content="https://opengraph.githubassets.com/1/TenticleTim/prometheus-fire" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
-  <!-- ── Twitter / X Card ───────────────────────────────────────────── -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Prometheus — AI Code Governance | 757 Rules" />
-  <meta name="twitter:description" content="Catches what AI misses. 757 rules for prompt injection, N+1 queries, missing validation, and 30+ AI failure patterns. Zero config. Works with Claude, Cursor, Copilot." />
+  <meta name="twitter:title" content="Prometheus — AI Code Governance + Autopilot | 757 Rules" />
+  <meta name="twitter:description" content="Catches what AI misses. 757 rules + Autopilot autonomous execution. Zero config. Works with Claude, Cursor, Copilot." />
   <meta name="twitter:image" content="https://opengraph.githubassets.com/1/TenticleTim/prometheus-fire" />
 
-  <!-- ── Structured Data: SoftwareApplication ──────────────────────── -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Prometheus Governance",
     "alternateName": "prometheus-governance",
-    "description": "AI-era code governance tool with 757 rules for detecting prompt injection, N+1 queries, missing validation, hardcoded secrets, and 30+ AI failure patterns. Works as a CLI, GitHub Action, and VS Code extension.",
+    "description": "AI-era code governance tool with 757 rules and Autopilot plan execution. Detects prompt injection, N+1 queries, missing validation, hardcoded secrets, and 30+ AI failure patterns. Executes entire feature plans autonomously under full governance. Works as a CLI, GitHub Action, VS Code extension, and Autopilot engine.",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Linux, macOS, Windows",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "downloadUrl": "https://www.npmjs.com/package/prometheus-governance",
     "installUrl": "https://www.npmjs.com/package/prometheus-governance",
     "softwareVersion": "1.0.0",
-    "author": {
-      "@type": "Organization",
-      "name": "Holley Studios"
-    },
-    "keywords": "AI governance, code review, Claude, Cursor, Copilot, prompt injection, TypeScript, security",
-    "featureList": [
-      "757 governance rules across 12 ecosystems",
-      "Prompt injection detection",
-      "N+1 query detection",
-      "Missing input validation detection",
-      "Hardcoded secret detection",
-      "AI adapter generation for Claude, Gemini, Cursor, Copilot, Codex",
-      "GitHub Actions CI integration",
-      "VS Code extension support",
-      "Zero configuration required"
-    ]
+    "author": { "@type": "Organization", "name": "Holley Studios" }
   }
   </script>
 
-  <!-- ── Structured Data: FAQ (AEO / Answer Engine Optimization) ───── -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is Prometheus Governance?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Prometheus Governance is an open-source AI code governance tool with 757 rules that catches the mistakes AI coding assistants (Claude, Cursor, GitHub Copilot, Gemini) predictably make — including prompt injection vulnerabilities, N+1 database queries, missing input validation, hardcoded secrets, and design system drift. It runs as a CLI, GitHub Action, or VS Code extension with zero configuration required."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How does Prometheus work with Claude, Cursor, and Copilot?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Prometheus generates AI adapter files (CLAUDE.md, .cursorrules, .github/copilot-instructions.md, AGENTS.md, GEMINI.md, Codex instructions) that embed all 757 governance rules directly into your AI tool's context. Every code generation session runs against the rules automatically. Run 'prometheus adapters' to generate all adapter files at once."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What programming languages does Prometheus support?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Prometheus supports 12 ecosystems: JavaScript/TypeScript (Next.js, React, Node.js, tRPC, Prisma, Zod), Python, Django, Java/Spring, C#/.NET, PHP/Laravel, Ruby/Rails, Go, Rust, and Infrastructure-as-Code (Dockerfile, Terraform, GitHub Actions). New languages are added as rule packs with zero config changes."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What AI coding mistakes does Prometheus catch?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Prometheus catches the most common AI coding failures: prompt injection (user input concatenated into LLM prompts), missing request body validation (no Zod schema on POST routes), N+1 database queries (Prisma calls inside loops), hardcoded secrets and API keys, SQL injection in raw queries, missing CSRF protection, insecure direct object references, design system token violations, and 30+ more categories of predictable AI mistakes."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How do I install Prometheus Governance?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Install with npm: 'npm install prometheus-governance'. Then run 'prometheus init' to scaffold the governance folder, 'prometheus scan' to analyze your repository, 'prometheus adapters' to generate AI tool configuration files, and 'prometheus review' before every commit or PR. Add it to your CI pipeline with the GitHub Actions workflow that 'prometheus init' generates automatically."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is Prometheus a linter or a code review tool?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Prometheus is neither a traditional linter nor a generic code reviewer. It is a governance layer specifically designed for AI-assisted development. While linters check code style and syntax, Prometheus detects the semantic patterns that AI tools specifically get wrong — security vulnerabilities, architectural anti-patterns, and domain-specific misuse that only emerge when AI generates code at scale."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is vibe coding and why is it dangerous?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Vibe coding is the practice of rapidly generating large amounts of code using AI tools without careful review of each output. It produces fast results but accumulates security vulnerabilities, architectural anti-patterns, and design drift. Prometheus has 25 dedicated vibe-coding rules that catch the patterns most likely to appear when developers ship AI-generated code without governance."
-        }
-      }
-    ]
-  }
-  </script>
-
-  <!-- ── Preconnect & fonts ──────────────────────────────────────────── -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
   <style>
     /* ─── TOKENS ─────────────────────────────────────────────────── */
     :root {
@@ -154,9 +64,7 @@
       --t3:       rgba(255,255,255,.45);
       --border:   rgba(255,255,255,.07);
       --border-h: rgba(201,168,76,.2);
-      /* Apple material easing — used for UI elements */
       --ease:     cubic-bezier(0.4,0,0.2,1);
-      /* Spring easing — kept for hero entrance animations */
       --spring:   cubic-bezier(.22,1,.36,1);
     }
 
@@ -204,13 +112,17 @@
     [data-d="2"] { transition-delay: .18s; }
     [data-d="3"] { transition-delay: .28s; }
     [data-d="4"] { transition-delay: .40s; }
+    [data-d="5"] { transition-delay: .50s; }
+    [data-d="6"] { transition-delay: .60s; }
+    [data-d="7"] { transition-delay: .70s; }
+    [data-d="8"] { transition-delay: .80s; }
 
     /* ─── LAYOUT ─────────────────────────────────────────────────── */
     .wrap    { max-width: 1080px; margin: 0 auto; padding: 0 48px; }
     .wrap-sm { max-width: 700px;  margin: 0 auto; padding: 0 48px; }
     .hr { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.06) 15%, rgba(255,255,255,.06) 85%, transparent); }
 
-    /* ─── EYEBROW / SECTION LABELS ───────────────────────────────── */
+    /* ─── EYEBROW ────────────────────────────────────────────────── */
     .eyebrow {
       display: flex; align-items: center; gap: 12px;
       font-family: 'JetBrains Mono', monospace;
@@ -224,7 +136,7 @@
       background: rgba(201,168,76,.4);
     }
 
-    /* ─── 1. NAV ─────────────────────────────────────────────────── */
+    /* ─── NAV ────────────────────────────────────────────────────── */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 300;
       height: 60px; display: flex; align-items: center; padding: 0 48px;
@@ -241,9 +153,10 @@
       display: flex; align-items: center; gap: 10px;
       font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700;
       letter-spacing: .12em; color: var(--gold);
+      flex-shrink: 0;
     }
     .nav-logo svg { width: 20px; height: 22px; }
-    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
     .nav-links a {
       font-size: 14px; font-weight: 400; letter-spacing: .01em;
       color: rgba(255,255,255,.65);
@@ -257,14 +170,39 @@
       border: 1px solid rgba(255,255,255,.2);
       color: var(--t1);
       transition: all 200ms ease;
+      flex-shrink: 0;
     }
     .nav-cta:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); }
 
-    /* ─── 2. HERO ────────────────────────────────────────────────── */
+    /* Mobile hamburger */
+    .nav-menu-btn {
+      display: none;
+      background: none;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 6px;
+      padding: 7px 9px;
+      cursor: pointer;
+      color: var(--t1);
+      gap: 5px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 38px; min-height: 38px;
+    }
+    .nav-menu-btn span {
+      display: block; width: 18px; height: 1.5px;
+      background: rgba(255,255,255,.75);
+      transition: all 220ms var(--ease);
+    }
+    .nav-menu-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-menu-btn.open span:nth-child(2) { opacity: 0; }
+    .nav-menu-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ─── HERO ───────────────────────────────────────────────────── */
     .hero {
       min-height: 100svh; position: relative;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; overflow: hidden; padding: 80px 48px 120px;
+      text-align: center; overflow: hidden; padding: 80px 24px 120px;
     }
     #fire-canvas {
       position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%);
@@ -284,7 +222,6 @@
     }
     .hero-c { position: relative; z-index: 2; }
 
-    /* Hero crest */
     .hero-crest {
       width: 80px; height: 88px; margin: 0 auto 36px;
       animation: cf 4.2s ease-in-out infinite, cg 3.5s ease-in-out infinite, ci .7s var(--spring) .1s forwards;
@@ -297,7 +234,6 @@
       50%    {filter:drop-shadow(0 0 40px rgba(201,168,76,.72)) drop-shadow(0 0 90px rgba(240,128,32,.22));}
     }
 
-    /* 2a. Hero eyebrow */
     .hero-sup {
       font-family: 'JetBrains Mono', monospace; font-size: 11px;
       letter-spacing: .18em; text-transform: uppercase;
@@ -307,9 +243,8 @@
     }
     @keyframes su { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
 
-    /* 2b. Hero wordmark */
     .hero h1 {
-      font-family: 'Cinzel', serif; font-size: clamp(68px,12.5vw,152px);
+      font-family: 'Cinzel', serif; font-size: clamp(60px,12.5vw,152px);
       font-weight: 700; letter-spacing: -.02em; line-height: .9;
       color: var(--cream); margin-bottom: 28px;
       text-shadow: 0 0 140px rgba(201,168,76,.1);
@@ -321,15 +256,14 @@
     }
     @keyframes lu { to { opacity: 1; transform: none; } }
 
-    /* 2c. Hero subheadline */
     .hero-sub {
-      font-size: clamp(18px,2vw,22px); font-weight: 300;
+      font-size: clamp(17px,2vw,22px); font-weight: 300;
       color: rgba(255,255,255,.55); line-height: 1.6; letter-spacing: .01em;
-      max-width: 480px; margin: 0 auto;
+      max-width: 520px; margin: 0 auto;
       opacity: 0; animation: su .8s var(--spring) 1.05s forwards;
     }
 
-    /* ─── 3. NPM COMMAND BLOCK ───────────────────────────────────── */
+    /* ─── NPM COMMAND BLOCK ──────────────────────────────────────── */
     .hero-install {
       display: inline-flex; align-items: center; gap: 24px;
       background: rgba(255,255,255,.04);
@@ -338,6 +272,7 @@
       padding: 14px 20px;
       margin-top: 52px; margin-bottom: 56px;
       opacity: 0; animation: su .8s var(--spring) 1.28s forwards;
+      flex-wrap: wrap; justify-content: center;
     }
     .hi-cmd {
       font-family: 'SF Mono', 'JetBrains Mono', 'Fira Code', monospace;
@@ -353,16 +288,17 @@
       letter-spacing: .12em; text-transform: uppercase;
       color: rgba(255,255,255,.4); font-weight: 500;
       transition: color 200ms ease; padding: 0;
+      min-height: 44px; min-width: 44px;
     }
     .hi-b:hover { color: rgba(255,255,255,.8); }
 
-    /* ─── 4. HERO STATS ──────────────────────────────────────────── */
+    /* ─── HERO STATS ─────────────────────────────────────────────── */
     .hero-stats {
       display: grid; grid-template-columns: repeat(4,1fr);
-      max-width: 480px; margin: 0 auto;
+      max-width: 520px; margin: 0 auto;
       opacity: 0; animation: su .8s var(--spring) 1.5s forwards;
+      gap: 8px;
     }
-    .hs-div { display: none; } /* remove vertical dividers */
     .hs-n {
       font-family: 'Cinzel', serif; font-size: 28px; font-weight: 200;
       color: var(--gold); line-height: 1;
@@ -370,18 +306,17 @@
     }
     .hs-l {
       margin-top: 6px; font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+      font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
       color: rgba(255,255,255,.3);
     }
 
-    /* Scroll hint — hide text, keep animated line */
     .scroll-hint {
       position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
       z-index: 2; display: flex; flex-direction: column; align-items: center;
       opacity: 0; animation: shi .6s ease 2.2s forwards;
     }
     @keyframes shi { to { opacity: 1; } }
-    .scroll-hint span { display: none; } /* remove SCROLL text */
+    .scroll-hint span { display: none; }
     .scroll-line {
       width: 1px; height: 32px;
       background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.3));
@@ -398,12 +333,10 @@
       letter-spacing: .22em; text-transform: uppercase; font-weight: 500;
       color: rgba(201,168,76,.6); line-height: 2.2; padding-top: 6px;
     }
-
-    /* 6. Problem section typography */
     .stmt-q {
       font-family: 'Cinzel', serif;
-      font-size: clamp(28px,4vw,52px);
-      font-weight: 300; line-height: 1.15; color: rgba(255,255,255,.8);
+      font-size: clamp(22px,3.2vw,44px);
+      font-weight: 300; line-height: 1.22; color: rgba(255,255,255,.8);
       max-width: 720px;
     }
     .stmt-q em { font-style: normal; font-weight: 700; color: var(--cream); }
@@ -419,7 +352,7 @@
     .stat-c { background: var(--bg-s); padding: 48px 32px; text-align: center; transition: background 200ms var(--ease); }
     .stat-c:hover { background: rgba(255,255,255,.022); }
     .stat-n {
-      font-family: 'Cinzel', serif; font-size: clamp(40px,5.5vw,76px);
+      font-family: 'Cinzel', serif; font-size: clamp(36px,5.5vw,76px);
       font-weight: 200; line-height: 1; color: var(--gold);
       text-shadow: 0 0 48px rgba(201,168,76,.22);
     }
@@ -430,11 +363,11 @@
       color: rgba(255,255,255,.3);
     }
 
-    /* ─── 7. TOOL CARDS ──────────────────────────────────────────── */
+    /* ─── TOOL CARDS ─────────────────────────────────────────────── */
     .tools { padding: 120px 0; }
     .tools-hd { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 52px; }
     .tools-hd h2 {
-      font-family: 'Cinzel', serif; font-size: clamp(28px,4vw,50px);
+      font-family: 'Cinzel', serif; font-size: clamp(26px,4vw,50px);
       font-weight: 500; letter-spacing: -.01em; line-height: 1.18;
     }
     .tools-hd p { font-size: 15px; color: var(--t2); font-weight: 300; max-width: 270px; text-align: right; line-height: 1.65; }
@@ -456,16 +389,12 @@
       background: rgba(255,255,255,.05);
       transform: translateY(-2px);
     }
-
-    /* shimmer on hover */
     .tool-card::before {
       content: ''; position: absolute; top: 0; left: -100%; width: 55%; height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.03), transparent);
       transition: left .6s var(--ease);
     }
     .tool-card:hover::before { left: 165%; }
-
-    /* mouse-tracking spotlight */
     .tool-card::after {
       content: ''; position: absolute; inset: 0; border-radius: 16px;
       background: radial-gradient(130px at var(--mx,50%) var(--my,0%), rgba(201,168,76,.06), transparent);
@@ -473,10 +402,8 @@
     }
     .tool-card:hover::after { opacity: 1; }
 
-    /* 7. Tool tag (eyebrow) — moved above title via flex order */
     .tool-ic   { width: 40px; height: 40px; color: rgba(201,168,76,.7); display: block; order: 1; margin-bottom: 24px; transition: transform 300ms var(--ease), color 300ms var(--ease); }
     .tool-card:hover .tool-ic { color: var(--gold); transform: scale(1.08) rotate(-2deg); }
-
     .tool-tag {
       order: 2; margin-bottom: 8px;
       display: flex; align-items: center; gap: 10px;
@@ -485,7 +412,6 @@
       color: rgba(201,168,76,.6);
     }
     .tool-tag::before { content: ''; display: block; width: 16px; height: 1px; background: rgba(201,168,76,.4); flex-shrink: 0; }
-
     .tool-name { order: 3; font-family: 'Cinzel', serif; font-size: 22px; font-weight: 500; letter-spacing: -.01em; color: var(--cream); margin-bottom: 14px; }
     .tool-desc { order: 4; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,.5); font-weight: 400; }
     .tool-desc code {
@@ -494,10 +420,108 @@
       padding: 1px 6px; border-radius: 4px;
     }
 
-    /* ─── 8. TERMINAL ────────────────────────────────────────────── */
+    /* ─── AUTOPILOT SECTION ──────────────────────────────────────── */
+    .ap-s {
+      padding: 140px 0;
+      background: linear-gradient(to bottom, transparent, rgba(201,168,76,.025) 25%, rgba(201,168,76,.025) 75%, transparent);
+      position: relative; overflow: hidden;
+    }
+    .ap-s::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,.04) 0%, transparent 65%);
+    }
+    .ap-hd { max-width: 760px; margin-bottom: 72px; }
+    .ap-hd h2 {
+      font-family: 'Cinzel', serif; font-size: clamp(32px,5vw,68px);
+      font-weight: 300; letter-spacing: -.02em; line-height: 1.08;
+      color: var(--cream); margin-bottom: 24px;
+    }
+    .ap-hd h2 em { font-style: normal; font-weight: 700; color: var(--gold); }
+    .ap-hd p {
+      font-size: clamp(15px,1.6vw,18px); color: rgba(255,255,255,.5);
+      font-weight: 300; line-height: 1.7; max-width: 600px;
+    }
+
+    .ap-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 16px;
+    }
+
+    .ap-card {
+      position: relative; overflow: hidden;
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.07);
+      border-left: 2px solid rgba(201,168,76,.3);
+      border-radius: 16px; padding: 40px;
+      display: flex; flex-direction: column;
+      transition: all 300ms var(--ease);
+    }
+    .ap-card:hover {
+      background: rgba(255,255,255,.04);
+      border-left-color: var(--gold);
+      transform: translateY(-2px);
+    }
+    .ap-num {
+      font-family: 'Cinzel', serif; font-size: 11px;
+      letter-spacing: .28em; text-transform: uppercase; font-weight: 500;
+      color: rgba(201,168,76,.45); margin-bottom: 20px;
+    }
+    .ap-name {
+      font-family: 'Cinzel', serif; font-size: 22px; font-weight: 500;
+      color: var(--cream); letter-spacing: -.01em; margin-bottom: 14px;
+    }
+    .ap-desc {
+      font-size: 15px; line-height: 1.72; color: rgba(255,255,255,.5);
+      font-weight: 300; margin-bottom: 28px; flex: 1;
+    }
+    .ap-desc code {
+      font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 12px;
+      color: var(--gold); background: rgba(201,168,76,.08);
+      padding: 1px 6px; border-radius: 4px;
+    }
+    .ap-cmd {
+      font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 12px;
+      color: rgba(201,168,76,.7); background: rgba(0,0,0,.4);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 8px; padding: 12px 16px;
+      letter-spacing: .02em;
+    }
+    .ap-cmd::before { content: '$ '; color: rgba(255,255,255,.2); }
+
+    /* Large featured card spans both columns */
+    .ap-card-full {
+      grid-column: 1 / -1;
+      flex-direction: row; gap: 48px; align-items: flex-start;
+      background: rgba(201,168,76,.04);
+      border: 1px solid rgba(201,168,76,.18);
+      border-left: 3px solid var(--gold);
+    }
+    .ap-card-full:hover {
+      background: rgba(201,168,76,.06);
+      border-color: rgba(201,168,76,.28);
+      border-left-color: var(--gold);
+    }
+    .ap-card-full .ap-body { flex: 1; }
+    .ap-card-full .ap-visual {
+      flex-shrink: 0; width: 340px;
+      background: rgba(0,0,0,.5);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px; padding: 20px 22px;
+      font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 12px;
+      line-height: 1.85; color: rgba(255,255,255,.45);
+    }
+    .av-gold { color: var(--gold); }
+    .av-green { color: #4ADE80; }
+    .av-red { color: #FF6B6B; }
+    .av-dim { color: rgba(255,255,255,.22); }
+    .av-spin { color: rgba(201,168,76,.6); animation: sp2 1.2s linear infinite; display: inline-block; }
+    @keyframes sp2 { to { transform: rotate(360deg); } }
+
+    /* ─── TERMINAL ───────────────────────────────────────────────── */
     .term-s { padding: 120px 0; }
     .term-hd { margin-bottom: 44px; }
-    .term-hd h2 { font-family: 'Cinzel', serif; font-size: clamp(28px,4vw,50px); font-weight: 500; letter-spacing: -.01em; line-height: 1.18; }
+    .term-hd h2 { font-family: 'Cinzel', serif; font-size: clamp(26px,4vw,50px); font-weight: 500; letter-spacing: -.01em; line-height: 1.18; }
 
     .terminal {
       background: rgba(4,3,12,.95);
@@ -505,6 +529,7 @@
       border-radius: 14px; overflow: hidden;
       font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.9;
       box-shadow: 0 0 0 1px rgba(255,255,255,.025), 0 48px 110px rgba(0,0,0,.7), 0 0 80px rgba(201,168,76,.03);
+      overflow-x: auto;
     }
     .term-bar {
       display: flex; align-items: center; gap: 8px;
@@ -512,16 +537,14 @@
       background: rgba(255,255,255,.04);
       border-bottom: 1px solid rgba(255,255,255,.06);
     }
-    .tc { width: 12px; height: 12px; border-radius: 50%; }
+    .tc { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
     .tc-r{background:#FF5F56}.tc-y{background:#FFBD2E}.tc-g{background:#27C93F}
-    .t-path { margin-left: 10px; font-size: 12px; color: rgba(255,255,255,.3); }
+    .t-path { margin-left: 10px; font-size: 12px; color: rgba(255,255,255,.3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .term-body { padding: 28px 32px 36px; min-height: 340px; background: rgba(0,0,0,.4); }
 
-    /* Terminal output token classes */
     .tp  { color: rgba(201,168,76,.55); }
     .tc2 { color: rgba(255,255,255,.85); }
     .tok { color: #4ADE80; }
-    /* 8. BLOCKER/HIGH severity labels */
     .te  { color: #FF6B6B; }
     .tw  { color: #FFA94D; }
     .td2 { color: rgba(255,255,255,.38); }
@@ -531,14 +554,13 @@
     .cursor { display: inline-block; width: 7px; height: 15px; background: rgba(255,255,255,.4); vertical-align: middle; animation: bl 1.1s step-end infinite; }
     @keyframes bl { 0%,100%{opacity:1} 50%{opacity:0} }
 
-    /* ─── 9. CATEGORIES ──────────────────────────────────────────── */
+    /* ─── CATEGORIES ─────────────────────────────────────────────── */
     .rules-s { padding: 120px 0; }
     .rules-hd { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-bottom: 52px; align-items: end; }
-    .rules-hd h2 { font-family: 'Cinzel', serif; font-size: clamp(28px,4vw,50px); font-weight: 500; letter-spacing: -.01em; line-height: 1.18; }
+    .rules-hd h2 { font-family: 'Cinzel', serif; font-size: clamp(26px,4vw,50px); font-weight: 500; letter-spacing: -.01em; line-height: 1.18; }
     .rules-hd p { font-size: 15px; color: var(--t2); font-weight: 300; line-height: 1.68; }
     .rules-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(196px,1fr)); gap: 10px; }
 
-    /* 9. Rectangular tags, not pills */
     .pill {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
       padding: 14px 20px;
@@ -551,16 +573,14 @@
     .pill-n { font-size: 14px; font-weight: 400; color: rgba(255,255,255,.7); white-space: nowrap; }
     .pill-c { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: rgba(201,168,76,.8); }
 
-    /* ─── 10. SETUP STEPS ────────────────────────────────────────── */
+    /* ─── SETUP STEPS ────────────────────────────────────────────── */
     .how-s { padding: 120px 0; }
     .how-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
     .how-sticky { position: sticky; top: 80px; }
-    .how-sticky h2 { font-family: 'Cinzel', serif; font-size: clamp(26px,3.5vw,46px); font-weight: 500; letter-spacing: -.01em; line-height: 1.25; margin-top: 16px; margin-bottom: 22px; }
+    .how-sticky h2 { font-family: 'Cinzel', serif; font-size: clamp(24px,3.5vw,46px); font-weight: 500; letter-spacing: -.01em; line-height: 1.25; margin-top: 16px; margin-bottom: 22px; }
     .how-sticky p { font-size: 15px; color: rgba(255,255,255,.5); font-weight: 300; line-height: 1.68; max-width: 340px; }
 
     .steps { display: flex; flex-direction: column; position: relative; }
-
-    /* Connecting vertical line between steps */
     .steps::before {
       content: ''; position: absolute;
       left: 5px; top: 2.2em; bottom: 2.8em;
@@ -570,8 +590,6 @@
     .step { display: flex; gap: 24px; padding: 32px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
     .step:first-child { padding-top: 0; }
     .step:last-child  { border-bottom: none; padding-bottom: 0; }
-
-    /* 10. Roman numeral styling */
     .step-n {
       font-family: 'JetBrains Mono', monospace; font-size: 11px;
       font-weight: 500; letter-spacing: .15em;
@@ -579,7 +597,6 @@
       width: 26px; flex-shrink: 0; padding-top: 2px;
       display: block;
     }
-
     .step h3 { font-size: 18px; font-weight: 500; color: var(--cream); letter-spacing: -.01em; margin-bottom: 10px; }
     .step p  { font-size: 14px; color: rgba(255,255,255,.45); line-height: 1.7; font-weight: 300; }
     .step code {
@@ -588,105 +605,12 @@
       padding: 1px 6px; border-radius: 4px;
     }
 
-    /* ─── 11. CTA ────────────────────────────────────────────────── */
-    .cta { padding: 148px 0; text-align: center; position: relative; overflow: hidden; }
-    #cta-fire {
-      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 700px; height: 520px; pointer-events: none; z-index: 0;
-    }
-    .cta-inner { position: relative; z-index: 1; }
-
-    .cta h2 {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(40px,6vw,80px);
-      font-weight: 300; letter-spacing: -.03em; line-height: 1.05;
-      color: var(--cream); margin-bottom: 22px;
-    }
-    .cta p { font-size: 17px; color: rgba(255,255,255,.5); font-weight: 300; max-width: 400px; margin: 0 auto 52px; line-height: 1.65; }
-    .cta-btns { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
-
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 32px; border-radius: 980px;
-      font-size: 14px; font-weight: 600; cursor: pointer;
-      transition: all 200ms ease; border: 1px solid transparent;
-      letter-spacing: .02em;
-    }
-    .btn-fire { background: var(--gold); color: #0A0806; border-color: var(--gold); }
-    .btn-fire:hover { background: #D4B700; border-color: #D4B700; transform: scale(1.02); }
-    .btn-ghost { background: transparent; color: rgba(255,255,255,.7); border-color: rgba(255,255,255,.15); }
-    .btn-ghost:hover { color: rgba(255,255,255,.95); border-color: rgba(255,255,255,.3); }
-
-    /* 11. Note */
-    .cta-note { margin-top: 30px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(255,255,255,.2); letter-spacing: .06em; }
-
-    /* ─── 12. FOOTER ─────────────────────────────────────────────── */
-    .footer { background: transparent; border-top: 1px solid rgba(255,255,255,.06); padding: 44px 0; }
-    .footer-i { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
-    .f-brand { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .18em; color: rgba(255,255,255,.25); }
-    .f-by { font-size: 12px; color: rgba(255,255,255,.2); margin-top: 4px; }
-    .f-links { display: flex; gap: 24px; }
-    .f-links a { font-size: 13px; color: rgba(255,255,255,.35); transition: color 200ms ease; }
-    .f-links a:hover { color: rgba(255,255,255,.7); }
-
-    /* ─── LANGUAGE COVERAGE ─────────────────────────────────────── */
-    .langs-s { padding: 100px 0; }
-    .langs-hd { max-width: 620px; margin-bottom: 52px; }
-    .langs-hd h2 {
-      font-family: 'Cinzel', serif; font-size: clamp(28px,4vw,50px);
-      font-weight: 500; letter-spacing: -.01em; line-height: 1.18;
-      margin-bottom: 18px;
-    }
-    .langs-hd p { font-size: 15px; color: var(--t2); font-weight: 300; line-height: 1.68; }
-    .langs-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 12px;
-    }
-
-    .lang-card {
-      background: var(--card);
-      border: 1px solid rgba(201,168,76,.15);
-      border-radius: 12px; padding: 24px;
-      cursor: default;
-      transition: transform 280ms var(--ease), border-color 280ms var(--ease), background 280ms var(--ease);
-    }
-    .lang-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(201,168,76,.32);
-      background: var(--card-h);
-    }
-
-    .lang-top {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 10px; margin-bottom: 12px; flex-wrap: wrap;
-    }
-    .lang-name {
-      font-size: 15px; font-weight: 500; color: var(--t1); line-height: 1.2;
-    }
-    .lang-badge {
-      font-family: 'JetBrains Mono', monospace; font-size: 11px;
-      font-weight: 500; letter-spacing: .04em;
-      color: var(--gold); background: rgba(201,168,76,.1);
-      border: 1px solid rgba(201,168,76,.22);
-      padding: 3px 9px; border-radius: 980px;
-      white-space: nowrap; flex-shrink: 0;
-    }
-    .lang-desc {
-      font-size: 13px; color: var(--t2); line-height: 1.6; font-weight: 300;
-    }
-
-    [data-d="5"] { transition-delay: .50s; }
-    [data-d="6"] { transition-delay: .60s; }
-    [data-d="7"] { transition-delay: .70s; }
-    [data-d="8"] { transition-delay: .80s; }
-
-    /* ─── PROBLEMS SECTION ──────────────────────────────────────── */
+    /* ─── PROBLEMS SECTION ───────────────────────────────────────── */
     .problems-s { padding: 100px 0; }
     .problems-hd { max-width: 680px; margin-bottom: 52px; }
     .problems-hd h2 {
-      font-family: 'Cinzel', serif; font-size: clamp(28px,4vw,50px);
-      font-weight: 500; letter-spacing: -.01em; line-height: 1.18;
-      margin-bottom: 18px;
+      font-family: 'Cinzel', serif; font-size: clamp(26px,4vw,50px);
+      font-weight: 500; letter-spacing: -.01em; line-height: 1.18; margin-bottom: 18px;
     }
     .problems-hd p { font-size: 15px; color: var(--t2); font-weight: 300; line-height: 1.68; }
 
@@ -706,7 +630,6 @@
       background: rgba(255,255,255,.05);
       transform: translateY(-2px);
     }
-
     .prob-badge {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 3px 10px; border-radius: 4px;
@@ -725,7 +648,6 @@
       font-size: 14px; color: var(--t2); line-height: 1.65;
       font-weight: 300; margin-bottom: 20px;
     }
-
     .prob-code {
       background: rgba(0,0,0,.5);
       border: 1px solid rgba(255,255,255,.07);
@@ -739,17 +661,112 @@
     .prob-code .pc-flag { color: #FF6B6B; }
     .prob-code .pc-rule { color: rgba(201,168,76,.65); }
     .prob-code .pc-dim  { color: rgba(255,255,255,.25); }
-
     .prob-rule-id {
       font-family: 'JetBrains Mono', monospace; font-size: 10px;
       letter-spacing: .1em; color: rgba(201,168,76,.5);
       margin-top: auto; padding-top: 4px;
     }
 
+    /* ─── LANGUAGE COVERAGE ─────────────────────────────────────── */
+    .langs-s { padding: 100px 0; }
+    .langs-hd { max-width: 620px; margin-bottom: 52px; }
+    .langs-hd h2 {
+      font-family: 'Cinzel', serif; font-size: clamp(26px,4vw,50px);
+      font-weight: 500; letter-spacing: -.01em; line-height: 1.18; margin-bottom: 18px;
+    }
+    .langs-hd p { font-size: 15px; color: var(--t2); font-weight: 300; line-height: 1.68; }
+    .langs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+
+    .lang-card {
+      background: var(--card);
+      border: 1px solid rgba(201,168,76,.15);
+      border-radius: 12px; padding: 24px;
+      cursor: default;
+      transition: transform 280ms var(--ease), border-color 280ms var(--ease), background 280ms var(--ease);
+    }
+    .lang-card:hover { transform: translateY(-2px); border-color: rgba(201,168,76,.32); background: var(--card-h); }
+
+    .lang-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+    .lang-name { font-size: 15px; font-weight: 500; color: var(--t1); line-height: 1.2; }
+    .lang-badge {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      font-weight: 500; letter-spacing: .04em;
+      color: var(--gold); background: rgba(201,168,76,.1);
+      border: 1px solid rgba(201,168,76,.22);
+      padding: 3px 9px; border-radius: 980px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .lang-desc { font-size: 13px; color: var(--t2); line-height: 1.6; font-weight: 300; }
+
+    /* ─── CTA ────────────────────────────────────────────────────── */
+    .cta { padding: 148px 0; text-align: center; position: relative; overflow: hidden; }
+    #cta-fire {
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 520px; pointer-events: none; z-index: 0;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(36px,6vw,80px);
+      font-weight: 300; letter-spacing: -.03em; line-height: 1.05;
+      color: var(--cream); margin-bottom: 22px;
+    }
+    .cta p { font-size: 17px; color: rgba(255,255,255,.5); font-weight: 300; max-width: 480px; margin: 0 auto 52px; line-height: 1.65; }
+    .cta-btns { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; border-radius: 980px;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: all 200ms ease; border: 1px solid transparent;
+      letter-spacing: .02em; min-height: 48px;
+    }
+    .btn-fire { background: var(--gold); color: #0A0806; border-color: var(--gold); }
+    .btn-fire:hover { background: #D4B700; border-color: #D4B700; transform: scale(1.02); }
+    .btn-ghost { background: transparent; color: rgba(255,255,255,.7); border-color: rgba(255,255,255,.15); }
+    .btn-ghost:hover { color: rgba(255,255,255,.95); border-color: rgba(255,255,255,.3); }
+    .cta-note { margin-top: 30px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(255,255,255,.2); letter-spacing: .06em; }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    .footer { background: transparent; border-top: 1px solid rgba(255,255,255,.06); padding: 44px 0; }
+    .footer-i { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .f-brand { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .18em; color: rgba(255,255,255,.25); }
+    .f-by { font-size: 12px; color: rgba(255,255,255,.2); margin-top: 4px; }
+    .f-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .f-links a { font-size: 13px; color: rgba(255,255,255,.35); transition: color 200ms ease; }
+    .f-links a:hover { color: rgba(255,255,255,.7); }
+
     /* ─── RESPONSIVE ─────────────────────────────────────────────── */
-    @media(max-width:860px){
-      .wrap, .wrap-sm { padding: 0 24px; }
-      .nav-links { display: none; }
+    @media(max-width:1024px) {
+      .ap-card-full { flex-direction: column; gap: 24px; }
+      .ap-card-full .ap-visual { width: 100%; }
+    }
+
+    @media(max-width:860px) {
+      .wrap, .wrap-sm { padding: 0 20px; }
+
+      /* Nav */
+      .nav { padding: 0 20px; }
+      .nav-links {
+        display: none;
+        position: fixed; top: 60px; left: 0; right: 0;
+        background: rgba(5,4,8,.97);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        border-bottom: 1px solid rgba(255,255,255,.08);
+        flex-direction: column; padding: 12px 20px 24px;
+        gap: 0; z-index: 299;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a {
+        padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+        font-size: 16px; color: rgba(255,255,255,.8);
+      }
+      .nav-links a:last-child { border-bottom: none; }
+      .nav-cta { display: none; }
+      .nav-menu-btn { display: flex; }
+
+      /* Layout */
       .stmt-inner { grid-template-columns: 1fr; gap: 20px; }
       .stmt-label { display: none; }
       .stats-grid { grid-template-columns: repeat(2,1fr); }
@@ -759,20 +776,47 @@
       .rules-hd { grid-template-columns: 1fr; gap: 20px; }
       .how-grid { grid-template-columns: 1fr; gap: 44px; }
       .how-sticky { position: relative; top: 0; }
-      .hero h1 { font-size: clamp(52px,14vw,86px); }
+      .ap-grid { grid-template-columns: 1fr; }
+      .ap-card-full { grid-column: 1; }
+
+      /* Sections */
+      .statement { padding: 80px 0; }
+      .tools { padding: 80px 0; }
+      .ap-s { padding: 80px 0; }
+      .term-s { padding: 80px 0; }
+      .rules-s { padding: 80px 0; }
+      .langs-s { padding: 72px 0; }
+      .how-s { padding: 80px 0; }
+      .cta { padding: 100px 0; }
+
+      /* Hero */
+      .hero { padding: 80px 20px 100px; }
+      .hero-stats { grid-template-columns: repeat(2,1fr); max-width: 320px; gap: 16px 8px; }
+
       #cta-fire { width: 100%; }
+    }
+
+    @media(max-width:500px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-c { padding: 32px 20px; }
+      .hero-install { gap: 12px; padding: 12px 16px; }
+      .hi-div { display: none; }
+      .rules-grid { grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); }
+      .langs-grid { grid-template-columns: 1fr; }
+      .step { gap: 16px; }
+      .ap-card { padding: 28px 24px; }
+      .tool-card { padding: 28px 24px; }
+      .prob-card { padding: 24px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── Skip navigation (accessibility) ───────────────────────────────── -->
 <a href="#main-content" style="position:absolute;left:-9999px;top:0;z-index:9999;padding:8px 16px;background:var(--gold);color:#000;font-size:14px;font-weight:600" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
 
-<!-- ── Global background fire canvas ─────────────────────────────────── -->
 <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
-<!-- ── 1. NAV ─────────────────────────────────────────────────────────── -->
+<!-- ── NAV ───────────────────────────────────────────────────────────── -->
 <nav class="nav" id="nav">
   <div class="nav-i">
     <a href="/" aria-label="Prometheus Governance — home" class="nav-logo">
@@ -787,24 +831,27 @@
       </svg>
       PROMETHEUS
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a href="#tools">Tools</a>
+      <a href="#autopilot">Autopilot</a>
       <a href="#rules">Rules</a>
       <a href="#languages">Languages</a>
       <a href="#how">How It Works</a>
       <a href="https://github.com/TenticleTim/prometheus-fire" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
     </div>
     <a href="https://github.com/TenticleTim/prometheus-fire" target="_blank" rel="noopener noreferrer" class="nav-cta">Get Prometheus</a>
+    <button class="nav-menu-btn" id="nav-menu-btn" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
-<!-- ── HERO ───────────────────────────────────────────────────────────── -->
+<!-- ── HERO ──────────────────────────────────────────────────────────── -->
 <section class="hero" id="main-content">
   <canvas id="fire-canvas" aria-hidden="true"></canvas>
   <div class="hero-bloom"></div>
 
   <div class="hero-c">
-    <!-- Premium torch-on-crest hero mark -->
     <svg class="hero-crest" viewBox="0 0 80 90" fill="none" aria-hidden="true">
       <defs>
         <linearGradient id="cs" x1="40" y1="4" x2="40" y2="86" gradientUnits="userSpaceOnUse">
@@ -812,7 +859,7 @@
           <stop offset="55%"  stop-color="#F08020"/>
           <stop offset="100%" stop-color="#C83808"/>
         </linearGradient>
-        <linearGradient id="cf" x1="40" y1="4" x2="40" y2="86" gradientUnits="userSpaceOnUse">
+        <linearGradient id="cf2" x1="40" y1="4" x2="40" y2="86" gradientUnits="userSpaceOnUse">
           <stop offset="0%"   stop-color="#C49A3A" stop-opacity=".22"/>
           <stop offset="100%" stop-color="#780A00" stop-opacity=".07"/>
         </linearGradient>
@@ -824,7 +871,7 @@
           <stop offset="0%"   stop-color="#D4AA4A"/>
           <stop offset="100%" stop-color="#6A4A12"/>
         </linearGradient>
-        <linearGradient id="cg" x1="40" y1="40" x2="40" y2="54" gradientUnits="userSpaceOnUse">
+        <linearGradient id="cg2" x1="40" y1="40" x2="40" y2="54" gradientUnits="userSpaceOnUse">
           <stop offset="0%"   stop-color="#E0BC60"/>
           <stop offset="100%" stop-color="#8A6A22"/>
         </linearGradient>
@@ -845,13 +892,13 @@
           <stop offset="100%" stop-color="#F5C842"/>
         </linearGradient>
       </defs>
-      <path d="M40 4 C62 4 72 14 72 25 L72 48 Q72 70 40 86 Q8 70 8 48 L8 25 C8 14 18 4 40 4 Z" fill="url(#cf)"/>
+      <path d="M40 4 C62 4 72 14 72 25 L72 48 Q72 70 40 86 Q8 70 8 48 L8 25 C8 14 18 4 40 4 Z" fill="url(#cf2)"/>
       <path d="M40 4 C62 4 72 14 72 25 L72 48 Q72 70 40 86 Q8 70 8 48 L8 25 C8 14 18 4 40 4 Z" stroke="url(#cs)" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
       <path d="M40 9 C59 9 67 17 67 26 L67 47 Q67 67 40 81 Q13 67 13 47 L13 26 C13 17 21 9 40 9 Z" stroke="url(#ci2)" stroke-width=".8" fill="none" stroke-linejoin="round"/>
       <path d="M36.5 52 L35.5 72 Q35.5 75 40 75 Q44.5 75 44.5 72 L43.5 52 Z" fill="url(#hg)"/>
       <rect x="35.5" y="58" width="9" height="2" rx="1" fill="rgba(255,224,100,.28)"/>
       <rect x="35.5" y="66" width="9" height="1.5" rx=".75" fill="rgba(255,224,100,.18)"/>
-      <path d="M28 50 Q28 41 40 39 Q52 41 52 50 L50 54 L30 54 Z" fill="url(#cg)"/>
+      <path d="M28 50 Q28 41 40 39 Q52 41 52 50 L50 54 L30 54 Z" fill="url(#cg2)"/>
       <path d="M40 39 C34 31 27 23 31 13 C33 8 36 6 34 4 C43 8 46 20 41 30 C45 22 47 13 44 8 C52 18 50 31 44 39 Z" fill="url(#fl1)" opacity=".58"/>
       <path d="M40 39 C36 32 31 25 34 15 C36 10 39 8 37 5 C45 10 47 22 42 31 C47 23 48 14 45 9 C52 20 50 32 44 39 Z" fill="url(#fl2)"/>
       <path d="M40 39 C37.5 33 35 27 37 20 C38 15 41 13 40 10 C44.5 16 45 26 42 34 Z" fill="url(#fl3)"/>
@@ -859,9 +906,8 @@
 
     <span class="hero-sup">Open Source · Holley Studios · Zero Config</span>
     <h1 id="htitle">PROMETHEUS</h1>
-    <p class="hero-sub">Your AI writes fast. Prometheus makes sure<br>it writes <em style="font-style:normal;color:var(--cream)">right</em>. 757 rules. Nothing slips.</p>
+    <p class="hero-sub">AI gives your code the speed of gods.<br>Prometheus gives it their wisdom.</p>
 
-    <!-- 3. Elevated npm command block -->
     <div class="hero-install">
       <div class="hi-cmd">
         <span class="hi-npm">npm</span>
@@ -878,14 +924,10 @@
       ">COPY</button>
     </div>
 
-    <!-- 4. Stats as grid, no dividers -->
     <div class="hero-stats">
       <div><div class="hs-n">757</div><div class="hs-l">Rules</div></div>
-      <div class="hs-div"></div>
       <div><div class="hs-n">12</div><div class="hs-l">Ecosystems</div></div>
-      <div class="hs-div"></div>
-      <div><div class="hs-n">3</div><div class="hs-l">Tools</div></div>
-      <div class="hs-div"></div>
+      <div><div class="hs-n" style="font-size:18px;padding-top:5px">Auto</div><div class="hs-l">Pilot</div></div>
       <div><div class="hs-n">0</div><div class="hs-l">Config</div></div>
     </div>
   </div>
@@ -902,14 +944,17 @@
 <section class="statement">
   <div class="wrap">
     <div class="stmt-inner">
-      <div class="stmt-label" data-r>The problem<br>with AI code</div>
+      <div class="stmt-label" data-r>The myth.<br>The fire.<br>The code.</div>
       <p class="stmt-q" data-r data-d="1">
-        Claude generated your API route in four seconds.
-        It accepts unvalidated input.
+        In the old story, Prometheus stole fire from Olympus — not because fire was safe,
+        but because power without access is tyranny.
+        Your AI is that fire. It generated your API route in four seconds.
+        It forgot to validate the input.
         It queries the database in a loop.
-        It concatenates user content directly into a prompt.
-        <em>It looks right. It passes code review.</em>
-        Prometheus knows the difference.
+        It put your users' words directly into your LLM prompt.
+        The fire is brilliant.
+        The fire also burns.
+        <em>Prometheus teaches it to burn right.</em>
       </p>
     </div>
   </div>
@@ -986,13 +1031,13 @@
 </section>
 <div class="hr"></div>
 
-<!-- ── STATS ─────────────────────────────────────────────────────────── -->
+<!-- ── STATS ──────────────────────────────────────────────────────────── -->
 <section class="stats">
   <div class="wrap">
     <div class="stats-grid">
       <div class="stat-c" data-r><div class="stat-n" data-count="757">757</div><div class="stat-l">Governance Rules</div></div>
       <div class="stat-c" data-r data-d="1"><div class="stat-n" data-count="12">12</div><div class="stat-l">Ecosystems Covered</div></div>
-      <div class="stat-c" data-r data-d="2"><div class="stat-n" data-count="3">3</div><div class="stat-l">Integrated Tools</div></div>
+      <div class="stat-c" data-r data-d="2"><div class="stat-n" data-count="4">4</div><div class="stat-l">Integrated Surfaces</div></div>
       <div class="stat-c" data-r data-d="3"><div class="stat-n">0<span class="stat-u"> config</span></div><div class="stat-l">Setup Required</div></div>
     </div>
   </div>
@@ -1004,10 +1049,10 @@
   <div class="wrap">
     <div class="tools-hd">
       <div>
-        <span class="eyebrow" data-r>Three instruments</span>
+        <span class="eyebrow" data-r>Four instruments</span>
         <h2 data-r data-d="1">One package.<br>Every layer protected.</h2>
       </div>
-      <p data-r data-d="2">CLI for local dev. GitHub Action for CI. Extension for real-time feedback and AI adapter generation while you write.</p>
+      <p data-r data-d="2">CLI for local dev. GitHub Action for CI. VS Code for real-time feedback. Autopilot for fully governed autonomous execution.</p>
     </div>
     <div class="tools-grid">
       <div class="tool-card" data-r data-d="1">
@@ -1016,7 +1061,7 @@
           <path d="M11 20L17 26L29 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <div class="tool-name">CLI</div>
-        <p class="tool-desc"><code>prometheus scan</code> grades your entire codebase A+ through F. <code>prometheus review</code> checks only staged changes — fast enough for pre-commit hooks.</p>
+        <p class="tool-desc"><code>prometheus scan</code> grades your entire codebase A+ through F. <code>prometheus review</code> checks only staged changes — fast enough for pre-commit hooks. <code>prometheus autopilot</code> executes entire feature plans autonomously.</p>
         <span class="tool-tag">The Oracle</span>
       </div>
       <div class="tool-card" data-r data-d="2">
@@ -1036,9 +1081,78 @@
           <path d="M22 30H28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
         <div class="tool-name">VS Code Extension</div>
-        <p class="tool-desc">Real-time findings as you type. Health score in the status bar. The <strong style="color:var(--cream);font-weight:500">AI Adapters panel</strong> exports your active rules as a governance brief for Claude, Cursor, and Copilot — so your AI writes governed code from the first keystroke, not just the last review.</p>
+        <p class="tool-desc">Real-time findings as you type. Health score in the status bar. The <strong style="color:var(--cream);font-weight:500">AI Adapters panel</strong> exports governed rules for Claude, Cursor, and Copilot. The live <strong style="color:var(--cream);font-weight:500">Autopilot sidebar</strong> shows session status, running tasks, and one-click cancel — all without leaving your editor.</p>
         <span class="tool-tag">The Watcher</span>
       </div>
+    </div>
+  </div>
+</section>
+<div class="hr"></div>
+
+<!-- ── AUTOPILOT ──────────────────────────────────────────────────────── -->
+<section class="ap-s" id="autopilot">
+  <div class="wrap">
+    <div class="ap-hd">
+      <span class="eyebrow" data-r>New · Autopilot</span>
+      <h2 data-r data-d="1">The fire that knows<br>where it's <em>going.</em></h2>
+      <p data-r data-d="2">Prometheus Autopilot executes your plan task by task, on its own git branch, under full governance — then reviews its own diff before you merge. You define what to build. Prometheus governs every decision along the way.</p>
+    </div>
+
+    <div class="ap-grid">
+
+      <!-- Full-width featured card: Autopilot execution -->
+      <div class="ap-card ap-card-full" data-r>
+        <div class="ap-body">
+          <div class="ap-num">I · Autonomous Execution</div>
+          <h3 class="ap-name">Branch. Build. Journal.</h3>
+          <p class="ap-desc">Write your plan in Markdown. Type <code>CONFIRMED</code> to start. Prometheus creates an isolated git branch, executes each task in sequence, journals every AI decision, and stops safely the moment something goes wrong. Your main branch is never touched. Cancel anytime with a sentinel file or one click in VS Code.</p>
+          <div class="ap-cmd">prometheus autopilot start MASTER_PLAN.md</div>
+        </div>
+        <div class="ap-visual" aria-hidden="true">
+<div><span class="av-gold">🔱 Autopilot  v1.0.0</span></div>
+<div><span class="av-dim">Branch: autopilot/stripe-checkout-a4f2</span></div>
+<div> </div>
+<div><span class="av-spin">◌</span> <span style="color:rgba(255,255,255,.6)">Task 1/4 — Add Stripe webhook handler</span></div>
+<div><span class="av-dim">  Recon complete. 3 files in scope.</span></div>
+<div><span class="av-dim">  Executing…</span></div>
+<div> </div>
+<div><span class="av-green">✓</span> <span style="color:rgba(255,255,255,.6)">Task 1 complete  (2m 14s)</span></div>
+<div><span class="av-dim">  Committed: feat: add Stripe webhook handler</span></div>
+<div><span class="av-dim">  Journal: .prometheus/autopilot/sessions/a4f2.md</span></div>
+<div> </div>
+<div><span class="av-spin">◌</span> <span style="color:rgba(255,255,255,.6)">Task 2/4 — Add payment schema migration</span></div>
+        </div>
+      </div>
+
+      <!-- 4 smaller cards -->
+      <div class="ap-card" data-r data-d="1">
+        <div class="ap-num">II · Plan Generator</div>
+        <h3 class="ap-name">Natural Language to Plan</h3>
+        <p class="ap-desc">Describe what you want to build in plain English. Prometheus reads your codebase, asks three clarifying questions, and generates a structured <code>MASTER_PLAN.md</code> — ready to validate and execute.</p>
+        <div class="ap-cmd">prometheus autopilot generate "add Stripe checkout"</div>
+      </div>
+
+      <div class="ap-card" data-r data-d="2">
+        <div class="ap-num">III · Post-Session Review</div>
+        <h3 class="ap-name">The AI Reviews Its Own Diff</h3>
+        <p class="ap-desc">When the session ends, Prometheus reviews every change it made. It surfaces decisions it's uncertain about, summarizes the full diff, and gives you a structured merge recommendation — APPROVE, APPROVE WITH FIXES, or REQUEST CHANGES.</p>
+        <div class="ap-cmd">prometheus autopilot review [session-id]</div>
+      </div>
+
+      <div class="ap-card" data-r data-d="3">
+        <div class="ap-num">IV · Convention Learning</div>
+        <h3 class="ap-name">Smarter Every Session</h3>
+        <p class="ap-desc">Every session teaches Prometheus more about your codebase. Preferred libraries, blocked packages, architectural patterns — stored in <code>.prometheus/autopilot/conventions.json</code> and applied to the next run automatically.</p>
+        <div class="ap-cmd">prometheus autopilot stats</div>
+      </div>
+
+      <div class="ap-card" data-r data-d="4">
+        <div class="ap-num">V · Reconnaissance</div>
+        <h3 class="ap-name">Read Before You Write</h3>
+        <p class="ap-desc">Before touching a single file, Autopilot performs a read-only scan of the task's scope — discovering relevant files, mapping dependencies, and surfacing risks. Better context means fewer wrong turns.</p>
+        <div class="ap-cmd">prometheus autopilot start PLAN.md --recon</div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1119,103 +1233,54 @@
       <p>757 rules across 12 ecosystems — the same governance layer whether your stack is TypeScript, Python, Go, Java, or infrastructure-as-code. New languages land as rule packs with zero config changes.</p>
     </div>
     <div class="langs-grid">
-
       <div class="lang-card" data-r data-d="0">
-        <div class="lang-top">
-          <span class="lang-name">JavaScript / TypeScript</span>
-          <span class="lang-badge">500+ rules</span>
-        </div>
+        <div class="lang-top"><span class="lang-name">JavaScript / TypeScript</span><span class="lang-badge">500+ rules</span></div>
         <p class="lang-desc">AI safety, React, Next.js, Node.js, tRPC, Prisma, Zod, security, performance, and TypeScript correctness.</p>
       </div>
-
       <div class="lang-card" data-r data-d="1">
-        <div class="lang-top">
-          <span class="lang-name">Python</span>
-          <span class="lang-badge">20 rules</span>
-        </div>
+        <div class="lang-top"><span class="lang-name">Python</span><span class="lang-badge">20 rules</span></div>
         <p class="lang-desc">SQL injection, unsafe deserialization, hardcoded secrets, path traversal, weak crypto, and subprocess injection.</p>
       </div>
-
       <div class="lang-card" data-r data-d="2">
-        <div class="lang-top">
-          <span class="lang-name">Django</span>
-          <span class="lang-badge">20 rules</span>
-        </div>
+        <div class="lang-top"><span class="lang-name">Django</span><span class="lang-badge">20 rules</span></div>
         <p class="lang-desc">Debug mode in production, raw SQL in ORM, missing CSRF, template injection via mark_safe, and missing AUTH_PASSWORD_VALIDATORS.</p>
       </div>
-
       <div class="lang-card" data-r data-d="3">
-        <div class="lang-top">
-          <span class="lang-name">Go</span>
-          <span class="lang-badge">20 rules</span>
-        </div>
+        <div class="lang-top"><span class="lang-name">Go</span><span class="lang-badge">20 rules</span></div>
         <p class="lang-desc">Goroutine leaks, SQL concatenation in db.Query, ioutil deprecation, weak random, missing context cancellation.</p>
       </div>
-
       <div class="lang-card" data-r data-d="4">
-        <div class="lang-top">
-          <span class="lang-name">Ruby / Rails</span>
-          <span class="lang-badge">20 rules</span>
-        </div>
+        <div class="lang-top"><span class="lang-name">Ruby / Rails</span><span class="lang-badge">20 rules</span></div>
         <p class="lang-desc">ActiveRecord string interpolation, params.permit!, YAML.load RCE, missing authenticate before_action.</p>
       </div>
-
       <div class="lang-card" data-r data-d="5">
-        <div class="lang-top">
-          <span class="lang-name">PHP / Laravel</span>
-          <span class="lang-badge">20 rules</span>
-        </div>
+        <div class="lang-top"><span class="lang-name">PHP / Laravel</span><span class="lang-badge">20 rules</span></div>
         <p class="lang-desc">SQL injection, XSS via echo, eval(), path traversal, $guarded = [], whereRaw() injection, SSRF.</p>
       </div>
-
       <div class="lang-card" data-r data-d="6">
-        <div class="lang-top">
-          <span class="lang-name">Java / Spring</span>
-          <span class="lang-badge">20 rules</span>
-        </div>
+        <div class="lang-top"><span class="lang-name">Java / Spring</span><span class="lang-badge">20 rules</span></div>
         <p class="lang-desc">Missing @PreAuthorize, XXE injection, ObjectInputStream deserialization, Spring CSRF disabled, actuator exposure.</p>
       </div>
-
       <div class="lang-card" data-r data-d="7">
-        <div class="lang-top">
-          <span class="lang-name">Rust</span>
-          <span class="lang-badge">20 rules</span>
-        </div>
+        <div class="lang-top"><span class="lang-name">Rust</span><span class="lang-badge">20 rules</span></div>
         <p class="lang-desc">unwrap() in lib crates, unsafe blocks without SAFETY comments, blocking I/O in async, mem::transmute.</p>
       </div>
-
       <div class="lang-card" data-r data-d="8">
-        <div class="lang-top">
-          <span class="lang-name">C# / .NET</span>
-          <span class="lang-badge">20 rules</span>
-        </div>
+        <div class="lang-top"><span class="lang-name">C# / .NET</span><span class="lang-badge">20 rules</span></div>
         <p class="lang-desc">Missing [Authorize], EF Core raw SQL interpolation, TypeNameHandling RCE, hardcoded JWT secrets.</p>
       </div>
-
       <div class="lang-card" data-r data-d="5">
-        <div class="lang-top">
-          <span class="lang-name">Dockerfile</span>
-          <span class="lang-badge">15 rules</span>
-        </div>
-        <p class="lang-desc">Running as root, secrets in ENV/ARG, <code>curl | bash</code> execution, no HEALTHCHECK, unpinned base tags, <code>ADD</code> instead of <code>COPY</code>.</p>
+        <div class="lang-top"><span class="lang-name">Dockerfile</span><span class="lang-badge">15 rules</span></div>
+        <p class="lang-desc">Running as root, secrets in ENV/ARG, <code>curl | bash</code> execution, no HEALTHCHECK, unpinned base tags.</p>
       </div>
-
       <div class="lang-card" data-r data-d="6">
-        <div class="lang-top">
-          <span class="lang-name">GitHub Actions</span>
-          <span class="lang-badge">10 rules</span>
-        </div>
-        <p class="lang-desc">Script injection via <code>${{ github.event.* }}</code>, pull_request_target TOCTOU, unpinned action SHA, write-all permissions, deprecated <code>::set-env::</code>.</p>
+        <div class="lang-top"><span class="lang-name">GitHub Actions</span><span class="lang-badge">10 rules</span></div>
+        <p class="lang-desc">Script injection via <code>${{ github.event.* }}</code>, pull_request_target TOCTOU, unpinned action SHA, write-all permissions.</p>
       </div>
-
       <div class="lang-card" data-r data-d="7">
-        <div class="lang-top">
-          <span class="lang-name">Terraform / IaC</span>
-          <span class="lang-badge">12 rules</span>
-        </div>
-        <p class="lang-desc">Public S3 ACL, security groups open to 0.0.0.0/0, unencrypted RDS and EBS, IAM wildcard actions, hardcoded credentials, IMDSv1 enabled.</p>
+        <div class="lang-top"><span class="lang-name">Terraform / IaC</span><span class="lang-badge">12 rules</span></div>
+        <p class="lang-desc">Public S3 ACL, security groups open to 0.0.0.0/0, unencrypted RDS and EBS, IAM wildcard actions, hardcoded credentials.</p>
       </div>
-
     </div>
   </div>
 </section>
@@ -1228,7 +1293,7 @@
       <div class="how-sticky">
         <span class="eyebrow" data-r>Setup</span>
         <h2 data-r data-d="1">Governed in minutes.<br>Protected forever.</h2>
-        <p data-r data-d="2">No account. No cloud. Prometheus runs locally, in CI, and in your editor — simultaneously. The feedback loop is both reactive and proactive.</p>
+        <p data-r data-d="2">No account. No cloud. Prometheus runs locally, in CI, and in your editor — simultaneously. The feedback loop is both reactive and proactive. Autopilot extends it to autonomous.</p>
       </div>
       <div class="steps">
         <div class="step" data-r>
@@ -1237,15 +1302,19 @@
         </div>
         <div class="step" data-r data-d="1">
           <span class="step-n">II</span>
-          <div><h3>Scan & Grade</h3><p>Run <code>prometheus scan</code> to get your first health grade (A+ through F). Every finding is categorized by severity so you know exactly what to fix first.</p></div>
+          <div><h3>Scan &amp; Grade</h3><p>Run <code>prometheus scan</code> to get your first health grade (A+ through F). Every finding is categorized by severity so you know exactly what to fix first.</p></div>
         </div>
         <div class="step" data-r data-d="2">
           <span class="step-n">III</span>
-          <div><h3>Teach Your AI</h3><p>Run <code>prometheus scan --adapter claude</code> to generate a governance brief. Paste it into Claude, Cursor, or Copilot. Your AI now knows your rules <em>before</em> it writes a single line — governed code from the first keystroke, not the last review.</p></div>
+          <div><h3>Teach Your AI</h3><p>Run <code>prometheus adapters</code> to generate governed briefs for Claude, Cursor, Copilot, and Gemini. Your AI now knows your rules <em>before</em> it writes a single line — governed from the first keystroke, not the last review.</p></div>
         </div>
         <div class="step" data-r data-d="3">
           <span class="step-n">IV</span>
-          <div><h3>Gate Every PR</h3><p>Drop one YAML file into <code>.github/workflows/</code>. Every pull request gets a full governance scan with inline comments on the exact offending line. BLOCKERs block the merge automatically — no human reviewer required to catch prompt injection or hardcoded secrets.</p></div>
+          <div><h3>Gate Every PR</h3><p>Drop one YAML file into <code>.github/workflows/</code>. Every pull request gets a full governance scan. BLOCKERs block the merge automatically — no human required to catch prompt injection or hardcoded secrets.</p></div>
+        </div>
+        <div class="step" data-r data-d="4">
+          <span class="step-n">V</span>
+          <div><h3>Launch Autopilot</h3><p>Describe a feature in plain English: <code>prometheus autopilot generate "add Stripe checkout"</code>. Answer three clarifying questions. Type <code>CONFIRMED</code>. Prometheus builds it autonomously — governed, journaled, and ready for your review.</p></div>
         </div>
       </div>
     </div>
@@ -1257,10 +1326,10 @@
 <section class="cta">
   <canvas id="cta-fire" aria-hidden="true"></canvas>
   <div class="cta-inner wrap-sm">
-    <h2 data-r>Stop reviewing<br>what AI got wrong.</h2>
-    <p data-r data-d="1">Teach it your rules upfront. Gate every PR. Catch what it misses. Open source, MIT licensed, no telemetry.</p>
+    <h2 data-r>The gods kept governance<br>for themselves.</h2>
+    <p data-r data-d="1">We stole it for you. 757 rules. Autopilot execution. AI-reviewed diffs. Convention learning. Open source. Zero config. No telemetry.</p>
     <div class="cta-btns" data-r data-d="2">
-      <a href="https://github.com/TenticleTim/prometheus-fire" target="_blank" rel="noopener noreferrer" class="btn btn-fire">Download from GitHub</a>
+      <a href="https://github.com/TenticleTim/prometheus-fire" target="_blank" rel="noopener noreferrer" class="btn btn-fire">Get Prometheus on GitHub</a>
       <a href="https://github.com/TenticleTim/prometheus-fire" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">★ &nbsp;Star on GitHub</a>
     </div>
     <p class="cta-note" data-r data-d="3">Node.js 18+  ·  MIT License  ·  Built by Holley Studios</p>
@@ -1276,6 +1345,7 @@
     </div>
     <div class="f-links">
       <a href="https://github.com/TenticleTim/prometheus-fire" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="#autopilot">Autopilot</a>
       <a href="https://github.com/TenticleTim/prometheus-fire/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a>
       <a href="https://github.com/TenticleTim/prometheus-fire/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security</a>
     </div>
@@ -1451,6 +1521,24 @@ makeFire(document.getElementById('cta-fire'), {
 (function () {
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => nav.classList.toggle('pinned', window.scrollY > 48), {passive:true});
+}());
+
+/* ─── Hamburger menu ─────────────────────────────────────────────────── */
+(function () {
+  const btn = document.getElementById('nav-menu-btn');
+  const links = document.getElementById('nav-links');
+  btn.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  });
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      links.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
 }());
 
 /* ─── Scroll reveal ──────────────────────────────────────────────────── */

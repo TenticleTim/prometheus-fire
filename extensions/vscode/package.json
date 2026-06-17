@@ -72,6 +72,42 @@
         "title": "Refresh Findings",
         "category": "Prometheus",
         "icon": "$(refresh)"
+      },
+      {
+        "command": "prometheus.autopilot.generate",
+        "title": "Generate Autopilot Plan",
+        "category": "Prometheus Autopilot",
+        "icon": "$(wand)"
+      },
+      {
+        "command": "prometheus.autopilot.cancel",
+        "title": "Cancel Running Session",
+        "category": "Prometheus Autopilot",
+        "icon": "$(stop-circle)"
+      },
+      {
+        "command": "prometheus.autopilot.review",
+        "title": "Review Session Diff (AI)",
+        "category": "Prometheus Autopilot",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "prometheus.autopilot.openPR",
+        "title": "Open Draft PR",
+        "category": "Prometheus Autopilot",
+        "icon": "$(git-pull-request)"
+      },
+      {
+        "command": "prometheus.autopilot.viewJournal",
+        "title": "View Session Journal",
+        "category": "Prometheus Autopilot",
+        "icon": "$(notebook)"
+      },
+      {
+        "command": "prometheus.autopilot.revert",
+        "title": "Revert Session (Delete Branch)",
+        "category": "Prometheus Autopilot",
+        "icon": "$(discard)"
       }
     ],
     "views": {
@@ -81,6 +117,13 @@
           "name": "Prometheus Findings",
           "icon": "$(shield)",
           "contextualTitle": "Prometheus Governance",
+          "when": "prometheus.active"
+        },
+        {
+          "id": "prometheus.autopilotView",
+          "name": "Prometheus Autopilot",
+          "icon": "$(rocket)",
+          "contextualTitle": "Prometheus Autopilot",
           "when": "prometheus.active"
         }
       ]
@@ -96,12 +139,65 @@
           "command": "prometheus.health",
           "when": "view == prometheus.findingsView",
           "group": "navigation"
+        },
+        {
+          "command": "prometheus.autopilot.generate",
+          "when": "view == prometheus.autopilotView",
+          "group": "navigation"
+        },
+        {
+          "command": "prometheus.autopilot.cancel",
+          "when": "view == prometheus.autopilotView && prometheus.autopilotActive",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "prometheus.autopilot.cancel",
+          "when": "view == prometheus.autopilotView && viewItem == autopilotHeader",
+          "group": "autopilot@1"
+        },
+        {
+          "command": "prometheus.autopilot.viewJournal",
+          "when": "view == prometheus.autopilotView && viewItem == autopilotHeader",
+          "group": "autopilot@2"
+        },
+        {
+          "command": "prometheus.autopilot.review",
+          "when": "view == prometheus.autopilotView && viewItem == autopilotHeader",
+          "group": "autopilot@3"
+        },
+        {
+          "command": "prometheus.autopilot.openPR",
+          "when": "view == prometheus.autopilotView && viewItem == autopilotHeader",
+          "group": "autopilot@4"
+        },
+        {
+          "command": "prometheus.autopilot.revert",
+          "when": "view == prometheus.autopilotView && viewItem == autopilotHeader",
+          "group": "autopilot@5"
         }
       ],
       "commandPalette": [
         {
           "command": "prometheus.reviewFile",
           "when": "editorIsOpen"
+        },
+        {
+          "command": "prometheus.autopilot.cancel",
+          "when": "prometheus.autopilotActive"
+        },
+        {
+          "command": "prometheus.autopilot.review",
+          "when": "prometheus.autopilotActive"
+        },
+        {
+          "command": "prometheus.autopilot.openPR",
+          "when": "prometheus.autopilotActive"
+        },
+        {
+          "command": "prometheus.autopilot.revert",
+          "when": "prometheus.autopilotActive"
         }
       ]
     },
@@ -139,6 +235,11 @@
           "type": "boolean",
           "default": false,
           "description": "Automatically run 'prometheus scan' on activation when report.json is missing."
+        },
+        "prometheus.autopilot.baseBranch": {
+          "type": "string",
+          "default": "main",
+          "description": "Base branch to diff against when reviewing an autopilot session."
         }
       }
     }

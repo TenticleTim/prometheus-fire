@@ -33,6 +33,7 @@ import { cmdReport } from './commands/report.ts';
 import { cmdAiLint } from './commands/ai-lint.ts';
 import { cmdPackCreate } from './commands/pack-create.ts';
 import { cmdPackPublish } from './commands/pack-publish.ts';
+import { cmdAutopilot } from './commands/autopilot.ts';
 
 const COMMANDS: Record<string, (argv: string[]) => Promise<void>> = {
   init: cmdInit,
@@ -74,6 +75,14 @@ const COMMANDS: Record<string, (argv: string[]) => Promise<void>> = {
   'catalog:profiles': (argv) => cmdCatalog(['profiles', ...argv]),
   'agent:create': cmdAgentCreate,
   'skill:create': cmdSkillCreate,
+  'autopilot': (argv) => cmdAutopilot(argv),
+  'autopilot:validate': (argv) => cmdAutopilot(['validate', ...argv]),
+  'autopilot:start': (argv) => cmdAutopilot(['start', ...argv]),
+  'autopilot:resume': (argv) => cmdAutopilot(['resume', ...argv]),
+  'autopilot:cancel': () => cmdAutopilot(['cancel']),
+  'autopilot:status': () => cmdAutopilot(['status']),
+  'autopilot:revert': (argv) => cmdAutopilot(['revert', ...argv]),
+  'autopilot:open-pr': (argv) => cmdAutopilot(['open-pr', ...argv]),
 };
 
 const argv = process.argv.slice(2); // ['command', ...flags]
@@ -198,6 +207,17 @@ CATALOG
   catalog:profiles         List profiles
   agent:create             Scaffold a new agent file
   skill:create             Scaffold a new skill file
+
+AUTOPILOT  (disabled by default — enable in .prometheus/config.json)
+  autopilot validate <plan>     Validate plan file, generate .review.md
+  autopilot start <plan>        Run plan autonomously (prompts CONFIRMED)
+    --yes                         Skip CONFIRMED prompt (warnings still shown)
+    --dry-run                     Parse and display without executing
+  autopilot resume <plan>       Resume from last completed task
+  autopilot cancel              Stop running session after current task
+  autopilot status              Show current session state
+  autopilot revert [session]    Delete autopilot branch, archive journal
+  autopilot open-pr [session]   Push branch, create draft PR
 
 DIAGNOSTICS
   doctor                   Check installation health

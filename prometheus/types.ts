@@ -24,6 +24,84 @@ export interface DesignConfig {
   opacityScale?: number[];
 }
 
+export interface AutopilotConfig {
+  enabled: boolean;
+  adapter?: 'claude' | 'openai' | 'gemini' | 'http';
+  maxCostUSD?: number;
+  taskTimeoutMinutes?: number;
+  maxRetriesPerTask?: number;
+  requirePluggedIn?: boolean;
+  stopOnCreditFailure?: boolean;
+  retryBackoffSeconds?: [number, number, number];
+  httpAdapterUrl?: string;
+}
+
+export type DoneCriterionType = 'file_exists' | 'command_passes' | 'grep_matches' | 'grep_not_matches';
+
+export interface DoneCriterion {
+  type: DoneCriterionType;
+  value: string;
+  raw: string;
+}
+
+export interface AutopilotTask {
+  index: number;
+  title: string;
+  context?: string;
+  scope?: string[];
+  allowedPackages?: string[];
+  dependsOn?: number[];
+  doneCriteria: DoneCriterion[];
+  isCheckpoint: boolean;
+}
+
+export interface AutopilotPlan {
+  project: string;
+  adapter: 'claude' | 'openai' | 'gemini' | 'http';
+  gates: string[];
+  commitOnPass: boolean;
+  maxRetries: number;
+  branchPrefix?: string;
+  tasks: AutopilotTask[];
+  rawContent: string;
+}
+
+export type ParseIssueType = 'error' | 'warning';
+
+export interface ParseIssue {
+  type: ParseIssueType;
+  message: string;
+  field?: string;
+}
+
+export interface PlanParseResult {
+  plan: AutopilotPlan | null;
+  issues: ParseIssue[];
+}
+
+export interface TaskDecision {
+  taskIndex: number;
+  taskTitle: string;
+  decision: string;
+}
+
+export interface AutopilotSession {
+  id: string;
+  planPath: string;
+  planSlug: string;
+  branch: string;
+  restoreTag: string;
+  startedAt: string;
+  adapter: string;
+  completedTaskIndexes: number[];
+  blockedTasks: Array<{ index: number; reason: string }>;
+  timedOutTaskIndexes: number[];
+  decisionLog: string[];
+  journalPath: string;
+  permissionsBackupPath: string | null;
+  lastTaskStash: string | null;
+}
+
 export interface PrometheusConfig {
   name: string;
   version: string;
@@ -62,6 +140,9 @@ export interface PrometheusConfig {
 
   // Design governance
   design?: DesignConfig;
+
+  // Autopilot autonomous build mode
+  autopilot?: AutopilotConfig;
 
   // Legacy nested compat
   review?: { defaultBase?: string };

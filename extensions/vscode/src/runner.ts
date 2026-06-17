@@ -182,3 +182,16 @@ export async function runAdapters(
   const bin = resolveBinary(workspaceRoot, binaryOverride);
   await exec(bin, ['adapters'], workspaceRoot);
 }
+
+/**
+ * Generic CLI runner for autopilot subcommands (revert, open-pr, etc.).
+ * Resolves the binary from the workspace, passes arbitrary args.
+ */
+export async function runPrometheus(
+  workspaceRoot: string,
+  args: string[],
+  binaryOverride?: string,
+): Promise<string> {
+  const bin = resolveBinary(workspaceRoot, binaryOverride);
+  return exec(bin, args, workspaceRoot);
+}

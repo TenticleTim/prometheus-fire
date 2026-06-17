@@ -92,7 +92,13 @@
     "prometheus:fix": "vite-node bin/cli.ts fix",
     "prometheus:watch": "vite-node bin/cli.ts watch",
     "prometheus:report": "vite-node bin/cli.ts report",
-    "prometheus:update": "vite-node bin/cli.ts update"
+    "prometheus:update": "vite-node bin/cli.ts update",
+    "prometheus:autopilot:validate": "vite-node bin/cli.ts autopilot:validate",
+    "prometheus:autopilot:start": "vite-node bin/cli.ts autopilot:start",
+    "prometheus:autopilot:resume": "vite-node bin/cli.ts autopilot:resume",
+    "prometheus:autopilot:cancel": "vite-node bin/cli.ts autopilot:cancel",
+    "prometheus:autopilot:status": "vite-node bin/cli.ts autopilot:status",
+    "prometheus:autopilot:revert": "vite-node bin/cli.ts autopilot:revert"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.10",
