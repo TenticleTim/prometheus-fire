@@ -19,16 +19,33 @@ import {
   formatHealthJson,
 } from '../../health.ts';
 
+function badgeColor(score: number): string {
+  if (score >= 90) return 'brightgreen';
+  if (score >= 75) return 'green';
+  if (score >= 60) return 'yellow';
+  if (score >= 40) return 'orange';
+  return 'red';
+}
+
 export async function cmdHealth(argv: string[]): Promise<void> {
   const { root, config } = createContext();
   const { flags } = parseArgs(argv);
   const json = flag(flags, 'json');
   const markdown = flag(flags, 'markdown');
+  const badge = flag(flags, 'badge');
   const fail = flag(flags, 'fail');
   const thresholdStr = flagVal(flags, 'threshold');
   const threshold = thresholdStr ? parseInt(thresholdStr, 10) : 60;
 
   const health = computeHealthForRoot(root, config);
+
+  if (badge) {
+    const color = badgeColor(health.score);
+    const label = encodeURIComponent(`prometheus score`);
+    const value = encodeURIComponent(`${health.score}%2F100`);
+    process.stdout.write(`![Prometheus Score](https://img.shields.io/badge/${label}-${value}-${color})\n`);
+    return;
+  }
 
   if (json) {
     process.stdout.write(formatHealthJson(health) + '\n');

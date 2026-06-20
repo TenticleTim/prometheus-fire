@@ -35,6 +35,23 @@ export type RefreshCallback = () => Promise<void>;
 export type ReviewFileCallback = (uri: vscode.Uri) => Promise<void>;
 export type GetAutopilotWatcher = () => AutopilotWatcher;
 
+// ── Shell sanitizers ──────────────────────────────────────────────────────────
+
+/** Strips characters that expand inside double-quoted bash strings ($, backtick, newlines). */
+function sanitizeShellArg(input: string): string {
+  return input.replace(/[`$\n\r]/g, '').replace(/"/g, '\\"');
+}
+
+/** Keeps only characters valid in git branch names. */
+function sanitizeBranchName(input: string): string {
+  return input.replace(/[^a-zA-Z0-9/_.-]/g, '');
+}
+
+/** Keeps only alphanumeric, hyphens, and underscores (session ID format). */
+function sanitizeId(input: string): string {
+  return input.replace(/[^a-zA-Z0-9_-]/g, '');
+}
+
 // ── Helper ────────────────────────────────────────────────────────────────────
 
 function handleError(err: unknown): void {
@@ -237,7 +254,7 @@ export function registerCommands(
         name: 'Prometheus Autopilot',
         cwd: workspaceRoot,
       });
-      terminal.sendText(`prometheus autopilot generate "${goal.replace(/"/g, '\\"')}"`);
+      terminal.sendText(`prometheus autopilot generate "${sanitizeShellArg(goal)}"`);
       terminal.show();
 
       void vscode.window.showInformationMessage(
@@ -296,7 +313,9 @@ export function registerCommands(
         name: 'Prometheus Review',
         cwd: workspaceRoot,
       });
-      terminal.sendText(`prometheus autopilot review ${session.id} --base=${baseBranch}`);
+      const safeId = sanitizeId(session.id);
+      const safeBase = sanitizeBranchName(baseBranch);
+      terminal.sendText(`prometheus autopilot review "${safeId}" --base="${safeBase}"`);
       terminal.show();
     }),
   );
@@ -315,7 +334,7 @@ export function registerCommands(
         name: 'Prometheus PR',
         cwd: workspaceRoot,
       });
-      terminal.sendText(`prometheus autopilot open-pr ${session.id}`);
+      terminal.sendText(`prometheus autopilot open-pr "${sanitizeId(session.id)}"`);
       terminal.show();
     }),
   );
@@ -513,7 +532,7 @@ export function registerCommands(
         name: 'Prometheus: Scope Check',
         cwd: workspaceRoot,
       });
-      terminal.sendText(`prometheus scope:check "${target.replace(/"/g, '\\"')}"`);
+      terminal.sendText(`prometheus scope:check "${sanitizeShellArg(target)}"`);
       terminal.show();
     }),
   );

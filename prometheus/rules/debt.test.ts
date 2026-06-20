@@ -19,7 +19,7 @@ function detect(ruleId: string, changedFiles: DetectInput['changedFiles']): Retu
 }
 
 function src(path: string, content: string): NonNullable<DetectInput['changedFiles']>[0] {
-  return { path, content, bytes: 0, additions: content.split('\n').length, deletions: 0 };
+  return { path, content };
 }
 
 // ── Rule metadata ─────────────────────────────────────────────────────────────

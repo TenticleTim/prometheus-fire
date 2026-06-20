@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prometheus — AI Code Governance | 757 Rules + Autopilot for Claude, Cursor & Copilot</title>
-  <meta name="description" content="Prometheus catches what AI misses — and now executes entire features autonomously. 757 governance rules, Autopilot plan execution, natural language plan generation, and AI-reviewed diffs. Zero config." />
-  <meta name="keywords" content="AI code governance, AI autopilot coding, Claude code rules, Cursor rules, GitHub Copilot governance, prompt injection detection, vibe coding safety, TypeScript security, code review automation, AI safety, LLM code quality, prometheus-governance, npm package, CI code review, autonomous AI coding" />
+  <title>Prometheus — AI Code Governance | 911 Rules + MCP Server + GDPR + CVE Scanning</title>
+  <meta name="description" content="Prometheus catches what AI misses — and governs AI agents before they write a line. 911 rules, MCP server integration, GDPR compliance pack, CVE scanning, SARIF output, tamper-evident audit trail. Zero config." />
+  <meta name="keywords" content="AI code governance, AI agent governance, MCP server, GDPR compliance, CVE scanning, SARIF, Claude code rules, Cursor rules, GitHub Copilot governance, prompt injection detection, vibe coding safety, TypeScript security, code review automation, AI safety, LLM code quality, prometheus-governance, npm package, CI code review, autonomous AI coding" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#050408" />
   <meta name="author" content="Holley Studios" />
@@ -16,16 +16,16 @@
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Prometheus Governance" />
-  <meta property="og:title" content="Prometheus — AI Code Governance + Autopilot | 757 Rules" />
-  <meta property="og:description" content="Catches what AI misses. 757 governance rules + Autopilot execution. Generate plans in natural language, execute autonomously, review your own diffs. Zero config." />
+  <meta property="og:title" content="Prometheus — AI Code Governance | 911 Rules + MCP + GDPR + CVE" />
+  <meta property="og:description" content="Catches what AI misses. 911 governance rules + MCP server + GDPR compliance + CVE scanning + tamper-evident audit trail. Zero config. Works with Claude, Cursor, Copilot." />
   <meta property="og:url" content="https://github.com/TenticleTim/prometheus-fire" />
   <meta property="og:image" content="https://opengraph.githubassets.com/1/TenticleTim/prometheus-fire" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Prometheus — AI Code Governance + Autopilot | 757 Rules" />
-  <meta name="twitter:description" content="Catches what AI misses. 757 rules + Autopilot autonomous execution. Zero config. Works with Claude, Cursor, Copilot." />
+  <meta name="twitter:title" content="Prometheus — AI Code Governance | 911 Rules + MCP Server + GDPR" />
+  <meta name="twitter:description" content="Catches what AI misses — before it writes. 911 rules + MCP server + GDPR + CVE scanning. Zero config. Works with Claude, Cursor, Copilot." />
   <meta name="twitter:image" content="https://opengraph.githubassets.com/1/TenticleTim/prometheus-fire" />
 
   <script type="application/ld+json">
@@ -34,13 +34,13 @@
     "@type": "SoftwareApplication",
     "name": "Prometheus Governance",
     "alternateName": "prometheus-governance",
-    "description": "AI-era code governance tool with 757 rules and Autopilot plan execution. Detects prompt injection, N+1 queries, missing validation, hardcoded secrets, and 30+ AI failure patterns. Executes entire feature plans autonomously under full governance. Works as a CLI, GitHub Action, VS Code extension, and Autopilot engine.",
+    "description": "AI-era code governance tool with 911 rules. Detects prompt injection, N+1 queries, CVE vulnerabilities, GDPR violations, license conflicts, and AI agent safety violations. MCP server governs AI before it writes a single line. Works as a CLI, GitHub Action, VS Code extension, MCP server, and Autopilot engine.",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Linux, macOS, Windows",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "downloadUrl": "https://www.npmjs.com/package/prometheus-governance",
     "installUrl": "https://www.npmjs.com/package/prometheus-governance",
-    "softwareVersion": "1.0.0",
+    "softwareVersion": "2.0.0",
     "author": { "@type": "Organization", "name": "Holley Studios" }
   }
   </script>
@@ -372,6 +372,9 @@
     }
     .tools-hd p { font-size: 15px; color: var(--t2); font-weight: 300; max-width: 270px; text-align: right; line-height: 1.65; }
     .tools-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .tools-grid .tool-card:nth-child(4) { grid-column: 1 / -1; flex-direction: row; gap: 40px; align-items: center; }
+    .tools-grid .tool-card:nth-child(4) .tool-desc { flex: 1; }
+    @media(max-width:860px) { .tools-grid .tool-card:nth-child(4) { flex-direction: column; gap: 20px; grid-column: 1; } }
 
     .tool-card {
       position: relative; overflow: hidden;
@@ -925,9 +928,9 @@
     </div>
 
     <div class="hero-stats">
-      <div><div class="hs-n">757</div><div class="hs-l">Rules</div></div>
-      <div><div class="hs-n">12</div><div class="hs-l">Ecosystems</div></div>
-      <div><div class="hs-n" style="font-size:18px;padding-top:5px">Auto</div><div class="hs-l">Pilot</div></div>
+      <div><div class="hs-n">911</div><div class="hs-l">Rules</div></div>
+      <div><div class="hs-n">6</div><div class="hs-l">Pillars</div></div>
+      <div><div class="hs-n" style="font-size:18px;padding-top:5px">MCP</div><div class="hs-l">Server</div></div>
       <div><div class="hs-n">0</div><div class="hs-l">Config</div></div>
     </div>
   </div>
@@ -967,7 +970,7 @@
     <div class="problems-hd">
       <span class="eyebrow" data-r>Real failures. Caught before push.</span>
       <h2 data-r data-d="1">What AI gets wrong.<br>Every time.</h2>
-      <p data-r data-d="2">AI tools make the same predictable mistakes across every project. Prometheus was built knowing exactly what they are — 757 rules derived from real production failures, not hypotheticals.</p>
+      <p data-r data-d="2">AI tools make the same predictable mistakes across every project. Prometheus was built knowing exactly what they are — 911 rules derived from real production failures, not hypotheticals.</p>
     </div>
     <div class="tools-grid">
 
@@ -1035,9 +1038,9 @@
 <section class="stats">
   <div class="wrap">
     <div class="stats-grid">
-      <div class="stat-c" data-r><div class="stat-n" data-count="757">757</div><div class="stat-l">Governance Rules</div></div>
+      <div class="stat-c" data-r><div class="stat-n" data-count="911">911</div><div class="stat-l">Governance Rules</div></div>
       <div class="stat-c" data-r data-d="1"><div class="stat-n" data-count="12">12</div><div class="stat-l">Ecosystems Covered</div></div>
-      <div class="stat-c" data-r data-d="2"><div class="stat-n" data-count="4">4</div><div class="stat-l">Integrated Surfaces</div></div>
+      <div class="stat-c" data-r data-d="2"><div class="stat-n" data-count="6">6</div><div class="stat-l">Gov. Pillars</div></div>
       <div class="stat-c" data-r data-d="3"><div class="stat-n">0<span class="stat-u"> config</span></div><div class="stat-l">Setup Required</div></div>
     </div>
   </div>
@@ -1052,7 +1055,7 @@
         <span class="eyebrow" data-r>Four instruments</span>
         <h2 data-r data-d="1">One package.<br>Every layer protected.</h2>
       </div>
-      <p data-r data-d="2">CLI for local dev. GitHub Action for CI. VS Code for real-time feedback. Autopilot for fully governed autonomous execution.</p>
+      <p data-r data-d="2">CLI for local dev. GitHub Action for CI. VS Code for real-time feedback. MCP server so AI governs itself before writing. Autopilot for fully governed autonomous execution.</p>
     </div>
     <div class="tools-grid">
       <div class="tool-card" data-r data-d="1">
@@ -1083,6 +1086,16 @@
         <div class="tool-name">VS Code Extension</div>
         <p class="tool-desc">Real-time findings as you type. Health score in the status bar. The <strong style="color:var(--cream);font-weight:500">AI Adapters panel</strong> exports governed rules for Claude, Cursor, and Copilot. The live <strong style="color:var(--cream);font-weight:500">Autopilot sidebar</strong> shows session status, running tasks, and one-click cancel — all without leaving your editor.</p>
         <span class="tool-tag">The Watcher</span>
+      </div>
+      <div class="tool-card" data-r data-d="4" style="border-top-color:rgba(201,168,76,.3);background:rgba(201,168,76,.025)">
+        <svg class="tool-ic" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="13" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M14 20h12M20 14v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="20" cy="20" r="3.5" fill="currentColor" opacity=".6"/>
+        </svg>
+        <div class="tool-name">MCP Server <span style="font-size:11px;font-family:'JetBrains Mono',monospace;color:rgba(201,168,76,.7);letter-spacing:.1em"> NEW v2</span></div>
+        <p class="tool-desc">Prometheus as a Model Context Protocol server. Claude and Cursor call <code>scan_file</code>, <code>explain_rule</code>, and <code>get_health</code> <em>before generating code</em> — governance happens at intent, not at review. <code>prometheus mcp:install</code> wires it into <code>~/.claude/settings.json</code> in seconds.</p>
+        <span class="tool-tag">The Governing Mind</span>
       </div>
     </div>
   </div>
@@ -1163,7 +1176,7 @@
   <div class="wrap">
     <div class="term-hd">
       <span class="eyebrow" data-r>See it work</span>
-      <h2 data-r data-d="1">757 rules. One command.</h2>
+      <h2 data-r data-d="1">911 rules. One command.</h2>
     </div>
     <div class="terminal" data-r data-d="2">
       <div class="term-bar">
@@ -1181,10 +1194,10 @@
   <div class="wrap">
     <div class="rules-hd">
       <div>
-        <span class="eyebrow" data-r>757 Rules</span>
+        <span class="eyebrow" data-r>911 Rules · v2.0</span>
         <h2 data-r data-d="1">Every layer of your<br>AI stack, governed.</h2>
       </div>
-      <p data-r data-d="2">From prompt injection to N+1 queries to hardcoded secrets. All 757 rules activate the moment you install. No configuration required. Every category below is a domain where AI tools predictably fail.</p>
+      <p data-r data-d="2">From prompt injection to CVE vulnerabilities to GDPR violations. All 911 rules activate the moment you install. No configuration required. Every category below is a domain where AI tools predictably fail.</p>
     </div>
     <div class="rules-grid">
       <div class="pill" data-r><span class="pill-n">Security</span><span class="pill-c">40</span></div>
@@ -1218,8 +1231,13 @@
       <div class="pill" data-r data-d="3"><span class="pill-n">Dockerfile</span><span class="pill-c">15</span></div>
       <div class="pill" data-r><span class="pill-n">Terraform</span><span class="pill-c">12</span></div>
       <div class="pill" data-r data-d="1"><span class="pill-n">GitHub Actions</span><span class="pill-c">10</span></div>
-      <div class="pill" data-r data-d="2"><span class="pill-n">Slopsquatting</span><span class="pill-c">5</span></div>
+      <div class="pill" data-r data-d="2"><span class="pill-n">Slopsquatting</span><span class="pill-c">15</span></div>
+      <div class="pill" data-r data-d="3" style="border-color:rgba(201,168,76,.2);background:rgba(201,168,76,.03)"><span class="pill-n">Agent Govern.</span><span class="pill-c" style="color:var(--gold)">12 ✦</span></div>
+      <div class="pill" data-r data-d="1" style="border-color:rgba(201,168,76,.2);background:rgba(201,168,76,.03)"><span class="pill-n">Dep. Security</span><span class="pill-c" style="color:var(--gold)">10 ✦</span></div>
+      <div class="pill" data-r data-d="2" style="border-color:rgba(201,168,76,.2);background:rgba(201,168,76,.03)"><span class="pill-n">License</span><span class="pill-c" style="color:var(--gold)">10 ✦</span></div>
+      <div class="pill" data-r data-d="3" style="border-color:rgba(201,168,76,.2);background:rgba(201,168,76,.03)"><span class="pill-n">GDPR</span><span class="pill-c" style="color:var(--gold)">15 ✦</span></div>
     </div>
+    <p style="margin-top:20px;font-size:12px;color:rgba(255,255,255,.3);font-family:'JetBrains Mono',monospace;letter-spacing:.06em" data-r data-d="4">✦ NEW IN v2.0</p>
   </div>
 </section>
 <div class="hr"></div>
@@ -1230,7 +1248,7 @@
     <div class="langs-hd" data-r>
       <span class="eyebrow">12 Ecosystems</span>
       <h2>Every Language.<br>One Tool.</h2>
-      <p>757 rules across 12 ecosystems — the same governance layer whether your stack is TypeScript, Python, Go, Java, or infrastructure-as-code. New languages land as rule packs with zero config changes.</p>
+      <p>911 rules across 12 ecosystems — the same governance layer whether your stack is TypeScript, Python, Go, Java, or infrastructure-as-code. v2.0 adds GDPR, CVE scanning, license compliance, and AI agent governance as first-class pillars.</p>
     </div>
     <div class="langs-grid">
       <div class="lang-card" data-r data-d="0">
@@ -1298,7 +1316,7 @@
       <div class="steps">
         <div class="step" data-r>
           <span class="step-n">I</span>
-          <div><h3>Install</h3><p>Run <code>npm install --save-dev prometheus-governance</code>. All 757 rules activate immediately — no config file needed.</p></div>
+          <div><h3>Install</h3><p>Run <code>npm install --save-dev prometheus-governance</code>. All 911 rules activate immediately — no config file needed.</p></div>
         </div>
         <div class="step" data-r data-d="1">
           <span class="step-n">II</span>
@@ -1327,7 +1345,7 @@
   <canvas id="cta-fire" aria-hidden="true"></canvas>
   <div class="cta-inner wrap-sm">
     <h2 data-r>The gods kept governance<br>for themselves.</h2>
-    <p data-r data-d="1">We stole it for you. 757 rules. Autopilot execution. AI-reviewed diffs. Convention learning. Open source. Zero config. No telemetry.</p>
+    <p data-r data-d="1">We stole it for you. 911 rules. MCP server. GDPR compliance. CVE scanning. Autopilot execution. AI-reviewed diffs. Open source. Zero config. No telemetry.</p>
     <div class="cta-btns" data-r data-d="2">
       <a href="https://github.com/TenticleTim/prometheus-fire" target="_blank" rel="noopener noreferrer" class="btn btn-fire">Get Prometheus on GitHub</a>
       <a href="https://github.com/TenticleTim/prometheus-fire" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">★ &nbsp;Star on GitHub</a>
@@ -1572,8 +1590,8 @@ makeFire(document.getElementById('cta-fire'), {
   const lines = [
     {h:'<span class="tp">$ </span><span class="tc2">prometheus scan</span>',p:200},
     {h:'<span class="tln"></span>',p:280},
-    {h:'<span class="tf">🔱 Prometheus Governance  v1.0.0</span>',p:80},
-    {h:'<span class="td2">   Scanning 847 files  ·  757 rules  ·  12 ecosystems</span>',p:520},
+    {h:'<span class="tf">🔱 Prometheus Governance  v2.0.0</span>',p:80},
+    {h:'<span class="td2">   Scanning 847 files  ·  911 rules  ·  6 pillars</span>',p:520},
     {h:'<span class="tln"></span>',p:40},
     {h:'<span class="te">  BLOCKER  src/api/ai/generate.ts:47</span>',p:55},
     {h:'<span class="te">           prompt_injection_user_input — User input concatenated</span>',p:45},
@@ -1590,7 +1608,7 @@ makeFire(document.getElementById('cta-fire'), {
     {h:'<span class="td2">           + 14 MEDIUM  ·  38 LOW  ·  22 TECH_DEBT</span>',p:180},
     {h:'<span class="tln"></span>',p:30},
     {h:'<span class="tpu">  ──────────────────────────────────────────────</span>',p:60},
-    {h:'<span class="td2">  Files scanned    847   ·   Rules evaluated  757</span>',p:70},
+    {h:'<span class="td2">  Files scanned    847   ·   Rules evaluated  911</span>',p:70},
     {h:'<span class="tln"></span>',p:30},
     {h:'<span class="te">  Health Grade   C   ·   Resolve BLOCKERs before deploy</span>',p:70},
     {h:'<span class="td2">  Report saved   .prometheus/report.json</span>',p:0},

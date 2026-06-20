@@ -33,8 +33,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Typecheck
+      - name: Typecheck (core)
         working-directory: prometheus
+        run: npm run typecheck
+
+      - name: Typecheck (vscode extension)
+        working-directory: extensions/vscode
+        run: npm run typecheck
+
+      - name: Typecheck (pr-review action)
+        working-directory: actions/pr-review
         run: npm run typecheck
 
       - name: Test
@@ -43,6 +51,14 @@ jobs:
 
       - name: Build
         working-directory: prometheus
+        run: npm run build
+
+      - name: Build (vscode extension)
+        working-directory: extensions/vscode
+        run: npm run build
+
+      - name: Build (pr-review action)
+        working-directory: actions/pr-review
         run: npm run build
 
       - name: Extract version from tag

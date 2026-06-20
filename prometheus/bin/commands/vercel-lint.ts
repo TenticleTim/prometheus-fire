@@ -38,8 +38,8 @@ function collectSourceFiles(root: string): string[] {
       if (SOURCE_EXT.test(p) || p.endsWith('vercel.json')) files.push(p);
       return;
     }
-    let entries: ReturnType<typeof readdirSync>;
-    try { entries = readdirSync(p, { withFileTypes: true }); } catch { return; }
+    let entries: import('node:fs').Dirent<string>[];
+    try { entries = readdirSync(p, { withFileTypes: true }) as import('node:fs').Dirent<string>[]; } catch { return; }
     for (const entry of entries) {
       if (entry.name.startsWith('.') || SKIP_DIRS.has(entry.name)) continue;
       walk(join(p, entry.name), depth + 1);

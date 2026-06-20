@@ -133,7 +133,7 @@ export async function cmdCommitLint(argv: string[]): Promise<void> {
   const ICON: Record<string, string> = { BLOCKER: '🚫', HIGH: '🔴', MEDIUM: '🟡', LOW: '⚪' };
   for (const f of findings) {
     const icon = ICON[f.severity] ?? '⚪';
-    console.log(`  ${icon} [${f.id ?? f.severity}] ${f.message}`);
+    console.log(`  ${icon} [${f.category}] ${f.message}`);
     if (f.suggestion) console.log(`     → ${f.suggestion}`);
   }
   console.log('');

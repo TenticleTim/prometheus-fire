@@ -56,6 +56,10 @@ import { DESIGN_RULES } from './design';
 import { DEBT_RULES } from './debt';
 import { COMMIT_RULES } from './commits';
 import { VERCEL_RULES } from './vercel';
+import { AGENT_RULES } from './agents';
+import { DEP_RULES } from './deps';
+import { LICENSE_RULES } from './license';
+import { GDPR_RULES } from './gdpr';
 
 // ── Local helpers (used inside detect() methods) ──────────────────────────────
 
@@ -644,4 +648,12 @@ export const PROMETHEUS_RULES: PrometheusRule[] = [
   // ── Commit + Deployment governance ───────────────────────────────────────────
   ...COMMIT_RULES,
   ...VERCEL_RULES,
+  // ── Agent Governance ─────────────────────────────────────────────────────────
+  ...AGENT_RULES,
+  // ── Dependency Security ───────────────────────────────────────────────────────
+  ...DEP_RULES,
+  // ── License Compliance ────────────────────────────────────────────────────────
+  ...LICENSE_RULES,
+  // ── GDPR Compliance ───────────────────────────────────────────────────────────
+  ...GDPR_RULES,
 ];

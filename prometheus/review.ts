@@ -11,6 +11,7 @@
 import type { Finding, PrometheusConfig, ScanResult } from './types';
 import { PROMETHEUS_RULES } from './rules/registry';
 import { sortFindings, SEVERITY_EMOJI } from './severity';
+import { toSarif } from './sarif.js';
 
 // ── Public input types ─────────────────────────────────────────────────────────
 
@@ -129,76 +130,15 @@ export function formatFindingsJson(findings: Finding[]): string {
   return JSON.stringify({ total: findings.length, findings }, null, 2);
 }
 
-// ── SARIF severity mapping ─────────────────────────────────────────────────────
-
-const SARIF_LEVEL: Record<string, 'error' | 'warning' | 'note'> = {
-  BLOCKER:   'error',
-  HIGH:      'error',
-  MEDIUM:    'warning',
-  LOW:       'note',
-  TECH_DEBT: 'note',
-};
-
 /**
  * Render findings as SARIF 2.1.0 — compatible with GitHub Code Scanning,
  * VS Code, JetBrains, and every enterprise SAST dashboard.
  *
+ * Delegates to sarif.ts which includes full rule metadata (descriptions, tags,
+ * severity) for all rules — not just those that produced findings.
+ *
  * Spec: https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html
  */
 export function formatFindingsSarif(findings: Finding[], version = '1.0.0'): string {
-  // Build unique rule descriptors from the findings
-  const ruleMap = new Map<string, { id: string; name: string; shortDesc: string }>();
-  for (const f of findings) {
-    if (!ruleMap.has(f.category)) {
-      ruleMap.set(f.category, {
-        id: f.category,
-        name: f.category.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-        shortDesc: f.message,
-      });
-    }
-  }
-
-  const results = findings.map((f) => {
-    const result: Record<string, unknown> = {
-      ruleId: f.category,
-      level: SARIF_LEVEL[f.severity] ?? 'warning',
-      message: { text: f.message + (f.suggestion ? ` Fix: ${f.suggestion}` : '') },
-      locations: [
-        {
-          physicalLocation: {
-            artifactLocation: { uri: f.file, uriBaseId: '%SRCROOT%' },
-            ...(f.line != null ? { region: { startLine: f.line } } : {}),
-          },
-        },
-      ],
-    };
-    // Attach severity as a property bag so tooling can filter by Prometheus tier
-    result.properties = { severity: f.severity };
-    return result;
-  });
-
-  const sarif = {
-    version: '2.1.0',
-    $schema: 'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json',
-    runs: [
-      {
-        tool: {
-          driver: {
-            name: 'Prometheus',
-            version,
-            informationUri: 'https://github.com/TenticleTim/prometheus-fire',
-            rules: [...ruleMap.values()].map((r) => ({
-              id: r.id,
-              name: r.name,
-              shortDescription: { text: r.shortDesc },
-              properties: { tags: ['prometheus', 'ai-governance'] },
-            })),
-          },
-        },
-        results,
-      },
-    ],
-  };
-
-  return JSON.stringify(sarif, null, 2) + '\n';
+  return JSON.stringify(toSarif(PROMETHEUS_RULES, findings, version), null, 2) + '\n';
 }

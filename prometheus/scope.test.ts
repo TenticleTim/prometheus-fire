@@ -18,7 +18,7 @@ function makeTmpDir(): string {
   return dir;
 }
 
-function writeScope(root: string, config: Partial<ScopeConfig>): void {
+function writeScope(root: string, config: unknown): void {
   mkdirSync(join(root, '.prometheus'), { recursive: true });
   writeFileSync(join(root, '.prometheus', 'scope.json'), JSON.stringify(config, null, 2));
 }

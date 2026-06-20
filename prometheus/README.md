@@ -18,7 +18,7 @@ Prometheus is a repo governance tool for TypeScript projects. Define your code r
 
 Without governance, every AI assistant in your team invents its own rules. Claude follows one convention, Cursor follows another, Copilot knows nothing about your auth patterns. Every PR review is inconsistent. Governance debt compounds silently.
 
-Prometheus solves this with a **single source of truth**: 757 rules defined once, propagated everywhere.
+Prometheus solves this with a **single source of truth**: 911 rules defined once, propagated everywhere.
 
 | | Prometheus | ESLint | Danger.js | CodeClimate |
 | --- | --- | --- | --- | --- |
@@ -27,7 +27,7 @@ Prometheus solves this with a **single source of truth**: 757 rules defined once
 | Works fully offline | ✓ | ✓ | ✗ | ✗ |
 | Governance folder + AI context | ✓ | ✗ | ✗ | ✗ |
 | Health score (0–100) | ✓ | ✗ | ✗ | ✓ |
-| Built-in rules (no plugins needed) | 505 | ✗ | ✗ | ✓ |
+| Built-in rules (no plugins needed) | 911 | ✗ | ✗ | ✓ |
 | Installable rule packs | ✓ | ✓ | ✗ | ✗ |
 | Inline suppressions with audit | ✓ | ✓ | ✗ | ✗ |
 | Baseline for legacy debt | ✓ | ✗ | ✗ | ✗ |
@@ -299,7 +299,7 @@ npx prometheus fix --base=main             # applies changes
 
 ## Rule packs
 
-Packs are installable bundles of additional rules, agents, skills, and playbooks. The built-in registry ships 757 rules — packs let the community (and your organisation) add more without forking.
+Packs are installable bundles of additional rules, agents, skills, and playbooks. The built-in registry ships 911 rules — packs let the community (and your organisation) add more without forking.
 
 ### Installing a pack
 
@@ -544,7 +544,7 @@ const content = buildAdapterContent('claude', existing, PROMETHEUS_RULES, config
 
 ```typescript
 // Rules
-PROMETHEUS_RULES           // PrometheusRule[] — all 505 built-in rules
+PROMETHEUS_RULES           // PrometheusRule[] — all 911 built-in rules
 getRulesByTag(tag)         // filter by tag
 getRulesBySeverity(sev)    // filter by severity
 getRulesByCategory(cat)    // filter by category
@@ -590,7 +590,7 @@ import type {
 ## How it works
 
 ```text
-PROMETHEUS_RULES             ← single source of truth (505 built-in rules + pack rules at runtime)
+PROMETHEUS_RULES             ← single source of truth (911 built-in rules + pack rules at runtime)
         │
         ├── adapters.ts      → CLAUDE.md · GEMINI.md · .cursor/ · .github/ · .codex/ · AGENTS.md
         ├── init.ts          → .prometheus/ governance folder

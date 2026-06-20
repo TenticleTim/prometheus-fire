@@ -42,6 +42,13 @@ import { cmdDebtScan } from './commands/debt.ts';
 import { cmdContext } from './commands/context.ts';
 import { cmdCommitLint, cmdCommitCreate } from './commands/commit-lint.ts';
 import { cmdVercelLint } from './commands/vercel-lint.ts';
+import { cmdCiGithubSecurity } from './commands/ci-github-security.ts';
+import { cmdCertificate } from './commands/certificate.ts';
+import { cmdMcp } from './commands/mcp.ts';
+import { cmdAgentAudit } from './commands/agent-audit.ts';
+import { cmdDeps } from './commands/deps.ts';
+import { cmdCompliance } from './commands/compliance.ts';
+import { cmdAiFingerprint } from './commands/ai-fingerprint.ts';
 
 const COMMANDS: Record<string, (argv: string[]) => Promise<void>> = {
   init: cmdInit,
@@ -65,6 +72,21 @@ const COMMANDS: Record<string, (argv: string[]) => Promise<void>> = {
   'pack:publish': cmdPackPublish,
   health: cmdHealth,
   ci: cmdCiGate,
+  'ci:github-security': cmdCiGithubSecurity,
+  'certificate:generate': cmdCertificate,
+  'certificate:verify': (argv) => cmdCertificate(['--verify', ...argv]),
+  'mcp:serve': (argv) => cmdMcp(['serve', ...argv]),
+  'mcp:install': (argv) => cmdMcp(['install', ...argv]),
+  'mcp:uninstall': (argv) => cmdMcp(['uninstall', ...argv]),
+  'mcp:status': (argv) => cmdMcp(['status', ...argv]),
+  'deps:audit': (argv) => cmdDeps(['audit', ...argv]),
+  'agent:audit:log': (argv) => cmdAgentAudit(['log', ...argv]),
+  'agent:audit:verify': (argv) => cmdAgentAudit(['verify', ...argv]),
+  'agent:audit:report': (argv) => cmdAgentAudit(['report', ...argv]),
+  'agent:audit:export': (argv) => cmdAgentAudit(['export', ...argv]),
+  'agent:audit:rotate': (argv) => cmdAgentAudit(['rotate', ...argv]),
+  'compliance:report': (argv) => cmdCompliance(['report', ...argv]),
+  'ai:fingerprint': cmdAiFingerprint,
   fix: cmdFix,
   report: cmdReport,
   'ai-lint': cmdAiLint,
@@ -142,10 +164,27 @@ HOOKS  (governance checks in git hooks — no extra dependencies)
   hooks uninstall          Remove prometheus blocks from hooks
   hooks status             Show current hook state
 
+MCP SERVER  (governance-before-writing — AI calls scan_file before generating code)
+  mcp:install              Add prometheus to ~/.claude/settings.json as an MCP server
+  mcp:serve                Start the MCP server (stdio JSON-RPC 2.0 — used by mcp:install)
+  mcp:status               Show whether MCP server is configured
+  mcp:uninstall            Remove MCP server from ~/.claude/settings.json
+
 CLAUDE CODE AUTO MODE  (real-time governance when Claude Code runs autonomously)
   claude:govern install    Install PreToolUse + Stop hooks into .claude/settings.json
   claude:govern uninstall  Remove governance hooks
   claude:govern status     Show hook installation state
+
+AGENT AUDIT TRAIL  (tamper-evident log of every AI agent action)
+  agent:audit:log <tool> <file>   Append an audit entry (called from PostToolUse hooks)
+    --status <PASS|BLOCKED|WARN>    Governance decision
+    --findings <id,...>             Comma-separated finding IDs
+  agent:audit:verify               Verify hash chain integrity — detect tampering
+  agent:audit:report               Human-readable action summary (last 20 entries)
+    --json                           Machine-readable JSON
+    --limit=<n>                      Show last n entries (default: 50)
+  agent:audit:export --format csv  Export all entries for compliance reporting
+  agent:audit:rotate               Archive current log and start fresh
 
 SUPPLY CHAIN SECURITY
   import:scan              Check all package imports against npm and PyPI registries
@@ -216,12 +255,35 @@ DRIFT DETECTION
 GOVERNANCE HEALTH
   health                   Governance score 0–100 with grade and priority actions
     --fail --threshold=<n>   Exit 1 if score is below n (default 60)
+    --badge                  Print shield.io badge URL to stdout
   health --json
   ci                       Combined gate: validate + drift + suppressions + health
     --base=<branch>
     --no-baseline
     --health-threshold=<n>
   ci --json
+  ci:github-security       Generate GitHub Actions workflow that uploads SARIF to Security tab
+    --write                  Write to .github/workflows/prometheus-security.yml
+  certificate:generate     Generate a signed governance certificate for this delivery
+    --write                  Write to .prometheus/certificate.json
+  certificate:verify       Verify hash integrity of .prometheus/certificate.json
+
+DEPENDENCY SECURITY
+  deps:audit               Query OSV.dev for CVEs in all project dependencies
+    --sbom                   Also write CycloneDX 1.4 SBOM to prometheus.sbom.json
+    --no-cache               Force refresh (bypass 24h cache)
+
+GDPR COMPLIANCE
+  compliance:report --standard gdpr   Generate audit-ready GDPR evidence report
+    --write                              Write to .prometheus/compliance-gdpr.md
+    --output=<path>                      Write to custom path
+
+AI CODE FINGERPRINTING
+  ai:fingerprint           Detect AI-generated files using git co-author markers and
+                           content heuristics (comment style, structural patterns)
+    --format json|text       Output format (default: text)
+    --output=<path>          Write to file
+    --min-confidence=<n>     Only show files above n% confidence (default: 0)
 
 AI BEHAVIOR FILE LINTER
   ai-lint                  Lint CLAUDE.md/.cursorrules/GEMINI.md for governance gaps

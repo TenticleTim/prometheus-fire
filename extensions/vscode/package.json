@@ -32,7 +32,8 @@
     "Copilot"
   ],
   "activationEvents": [
-    "workspaceContains:.prometheus/config.json"
+    "workspaceContains:.prometheus/config.json",
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {

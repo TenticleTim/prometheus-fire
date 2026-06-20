@@ -6,6 +6,42 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and 
 
 ---
 
+## [2.0.0] — 2026-06-20
+
+### Added
+
+**6 New Governance Pillars:**
+
+- **Pillar 1 — MCP Server** (`prometheus mcp:serve`, `prometheus mcp:install`) — Prometheus becomes a Model Context Protocol server. AI assistants call `scan_file`, `explain_rule`, `get_health`, `lint_commit`, and `get_context` *before* generating code. `mcp:install` writes the server entry into `~/.claude/settings.json`. New files: `prometheus/mcp-server.ts`, `prometheus/bin/commands/mcp.ts`.
+
+- **Pillar 2 — Dependency Security** (`prometheus deps:audit`) — Async CVE scanning via OSV.dev (`api.osv.dev/v1/querybatch`). Results cached in `.prometheus/dep-cache.json` (24h TTL) and consumed synchronously by 10 new DEP_001–010 rules: critical CVE (BLOCKER), high/medium CVE, abandoned-with-CVE, no integrity hash, git dependency, major drift, prerelease in prod, deprecated package, stale cache. SBOM export via `--sbom` flag in CycloneDX 1.4 format. New files: `prometheus/osv-client.ts`, `prometheus/rules/deps.ts`, `prometheus/bin/commands/deps.ts`.
+
+- **Pillar 3 — Agent Governance** — 12 new AGNT_001–012 rules detecting missing scope declarations, unconstrained Bash, ungoverned MCP servers, absent hooks, no token budget, no audit trail, and unrestricted network access. Dual-directory guard (`.claude/` AND `.prometheus/` must both exist) prevents false positives in dev environments. Plus tamper-evident **Agent Audit Trail** (`prometheus agent:audit:log|verify|report|export|rotate`) — append-only `.prometheus/audit.jsonl` with sha256 hash-chained entries using `node:crypto`. `verify` detects tampering by recomputing the entire chain. New files: `prometheus/agent-audit.ts`, `prometheus/rules/agents.ts`, `prometheus/bin/commands/agent-audit.ts`.
+
+- **Pillar 4 — SARIF Output** (`prometheus validate --sarif`) — SARIF 2.1.0 JSON for GitHub Security tab, VS Code Problems panel, Azure DevOps. All 911 rules emit full `reportingDescriptor` metadata. `prometheus ci:github-security` generates a GitHub Actions workflow that uploads `prometheus.sarif` to `github/codeql-action/upload-sarif@v3`. New file: `prometheus/sarif.ts`.
+
+- **Pillar 5 — License Compliance** — 10 new LIC_001–010 rules: GPL in commercial projects (BLOCKER), unknown/UNLICENSED deps, LGPL copyleft, missing LICENSE file, proprietary dep, invalid SPDX, dual-license ambiguity, AI training restriction, GPL/Apache incompatibility (BLOCKER), missing NOTICE file. All rules use the `changedFiles !== undefined` filesystem guard to avoid false positives in changed-files mode. New file: `prometheus/rules/license.ts`.
+
+- **Pillar 6 — GDPR Compliance Pack** (`prometheus compliance:report --standard gdpr`) — 15 new GDPR_001–015 rules covering: PII in console.log, analytics without consent, cookie without consent banner, PII in URL params, PII in localStorage, missing data deletion endpoint, PII in external logging (BLOCKER), unencrypted PII in Prisma schema, missing privacy policy link, third-party tracking without consent, PII in API error responses (BLOCKER), missing retention policy, session without expiry, real PII in test fixtures, and IP storage without consent. `compliance:report --standard gdpr` generates an audit-ready Markdown evidence report mapping each finding to its GDPR article. New files: `prometheus/rules/gdpr.ts`, `prometheus/bin/commands/compliance.ts`.
+
+**3 Quick Wins:**
+
+- **Governance Certificate** (`prometheus certificate:generate`, `prometheus certificate:verify`) — Signed JSON artifact per delivery with sha256 hash chain for tamper detection. Fields: `rulesChecked`, `blockers`, `healthScore`, `healthGrade`, `hash`, `chain`. Agencies include in every delivery. New file: `prometheus/bin/commands/certificate.ts`.
+
+- **Health Badge** (`prometheus health --badge`) — Prints shield.io badge markdown to stdout. Color ranges: ≥80 brightgreen, ≥70 green, ≥60 yellowgreen, ≥50 yellow, ≥40 orange, <40 red.
+
+- **AI Code Fingerprinting** (`prometheus ai:fingerprint`) — Detects AI-generated files using git Co-Authored-By commit markers and static content heuristics (over-explained comments, step-numbered blocks, AI docstring patterns, boilerplate try/catch). Reports `aiGeneratedEstimate`, `topTool`, and per-file confidence scores. `--format json` for machine-readable output. New file: `prometheus/bin/commands/ai-fingerprint.ts`.
+
+- Total rule count: **911** (864 previous + 12 AGNT + 10 DEP + 10 LIC + 15 GDPR).
+
+### Changed
+
+- `formatFindingsSarif()` in `review.ts` now delegates to `sarif.ts` for full rule metadata emission — all 911 rules appear in SARIF output regardless of whether they have findings.
+- `prometheus health --badge` added as a new flag to the existing `health` command.
+- README rule counts updated from 864 → 911.
+
+---
+
 ## [1.3.0] — 2026-06-20
 
 ### Added
