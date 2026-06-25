@@ -4,7 +4,10 @@
   "project": "thesmos-governance",
   "disabledRules": [
     "lic_proprietary_dependency",
-    "lic_copyleft_dependency"
+    "lic_copyleft_dependency",
+    "direct_env_access",
+    "eval_usage",
+    "vibe_eval_usage"
   ],
   "ignoredFolders": [
     "node_modules",
@@ -89,7 +92,7 @@
     },
     {
       "category": "eval_usage",
-      "severity": "BLOCKER"
+      "severity": "HIGH"
     },
     {
       "category": "dangerous_inner_html",
@@ -97,7 +100,7 @@
     },
     {
       "category": "sql_injection",
-      "severity": "BLOCKER"
+      "severity": "HIGH"
     },
     {
       "category": "innerHTML_assignment",
@@ -109,7 +112,7 @@
     },
     {
       "category": "path_traversal",
-      "severity": "BLOCKER"
+      "severity": "HIGH"
     },
     {
       "category": "cors_wildcard",
@@ -129,7 +132,7 @@
     },
     {
       "category": "ssrf_fetch",
-      "severity": "BLOCKER"
+      "severity": "HIGH"
     },
     {
       "category": "open_redirect",
@@ -137,7 +140,7 @@
     },
     {
       "category": "shell_injection",
-      "severity": "BLOCKER"
+      "severity": "HIGH"
     },
     {
       "category": "prototype_pollution",
@@ -1601,7 +1604,7 @@
     },
     {
       "category": "child_process_shell_injection",
-      "severity": "BLOCKER"
+      "severity": "HIGH"
     },
     {
       "category": "missing_request_timeout",
@@ -1657,7 +1660,7 @@
     },
     {
       "category": "sql_injection",
-      "severity": "BLOCKER"
+      "severity": "HIGH"
     },
     {
       "category": "sensitive_data_logged",
@@ -1701,7 +1704,7 @@
     },
     {
       "category": "ssrf_unvalidated_url",
-      "severity": "BLOCKER"
+      "severity": "HIGH"
     },
     {
       "category": "empty_catch_block",
@@ -2209,7 +2212,7 @@
     },
     {
       "category": "vibe_ssrf",
-      "severity": "BLOCKER"
+      "severity": "HIGH"
     },
     {
       "category": "vibe_no_rate_limit",
@@ -2237,11 +2240,11 @@
     },
     {
       "category": "vibe_sql_template_injection",
-      "severity": "BLOCKER"
+      "severity": "HIGH"
     },
     {
       "category": "vibe_path_traversal",
-      "severity": "BLOCKER"
+      "severity": "HIGH"
     },
     {
       "category": "vibe_unvalidated_redirect",

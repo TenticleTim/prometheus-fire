@@ -92,6 +92,13 @@ export async function getChangedFiles(
         core.debug(`Skipping source map: ${file.filename}`);
         continue;
       }
+      // Skip rule detection source and catalog docs — they contain intentional
+      // bad-pattern examples and regex strings that self-trigger the very rules
+      // they implement, producing false BLOCKER annotations.
+      if (/(?:^|[\\/])thesmos\/(?:rules|catalog)(?:[\\/]|$)/.test(file.filename)) {
+        core.debug(`Skipping internal tooling file: ${file.filename}`);
+        continue;
+      }
 
       const absPath = join(workspace, file.filename);
       if (!existsSync(absPath)) continue;
