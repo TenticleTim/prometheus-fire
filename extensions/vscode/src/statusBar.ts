@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Holley Studios. All rights reserved.
 /**
  * StatusBarManager — shows governance health in the VS Code status bar.
  *
