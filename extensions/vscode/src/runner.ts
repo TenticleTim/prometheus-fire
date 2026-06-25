@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Holley Studios. All rights reserved.
 /**
  * Thesmos CLI execution layer.
  *
@@ -204,6 +205,22 @@ export async function runAdapters(
 }
 
 /**
+ * Runs `thesmos fix --apply [--rule=<category>]`.
+ * Returns human-readable stdout showing what was changed.
+ * A "no changes" result is a valid exit 0 — never throws for that case.
+ */
+export async function runFix(
+  workspaceRoot: string,
+  binaryOverride: string | undefined,
+  ruleCategory?: string,
+): Promise<string> {
+  const bin = resolveBinary(workspaceRoot, binaryOverride);
+  const args = ['fix', '--apply'];
+  if (ruleCategory) args.push(`--rule=${ruleCategory}`);
+  return exec(bin, args, workspaceRoot);
+}
+
+/**
  * Generic CLI runner for autopilot subcommands (revert, open-pr, etc.).
  * Resolves the binary from the workspace, passes arbitrary args.
  */
@@ -214,4 +231,36 @@ export async function runThesmos(
 ): Promise<string> {
   const bin = resolveBinary(workspaceRoot, binaryOverride);
   return exec(bin, args, workspaceRoot);
+}
+
+export interface TokenReport {
+  sessionCostUSD: number;
+  todayCostUSD: number;
+  projectCostUSD: number;
+}
+
+/**
+ * Runs `thesmos tokens:report --json` and returns a parsed cost summary.
+ * Returns null if token tracking has no data yet (first run, no events file).
+ */
+export async function runTokensReport(
+  workspaceRoot: string,
+  binaryOverride?: string,
+): Promise<TokenReport | null> {
+  const bin = resolveBinary(workspaceRoot, binaryOverride);
+  try {
+    const stdout = await exec(bin, ['tokens:report', '--json'], workspaceRoot);
+    const data = JSON.parse(stdout) as {
+      session?: { cost?: number };
+      today?: { cost?: number };
+      project?: { cost?: number };
+    };
+    return {
+      sessionCostUSD: data.session?.cost ?? 0,
+      todayCostUSD: data.today?.cost ?? 0,
+      projectCostUSD: data.project?.cost ?? 0,
+    };
+  } catch {
+    return null;
+  }
 }

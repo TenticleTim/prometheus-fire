@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Holley Studios. All rights reserved.
 /**
  * Thesmos Governance — VS Code Extension
  * by Holley Studios
@@ -38,8 +39,10 @@ import { ThesmosCodeActionProvider } from './codeAction.js';
 import {
   runReview,
   runHealth,
+  runTokensReport,
   isInstalled,
   hasReport,
+  resolveBinary,
   ThesmosNotFoundError,
   ThesmosReportMissingError,
 } from './runner.js';
@@ -403,6 +406,13 @@ class ThesmosExtension implements vscode.Disposable {
       // Health score is a nice-to-have; don't surface the error
       this.statusBar.showInactive();
     }
+
+    // Token meter — non-blocking, fail silently
+    void runTokensReport(this.workspaceRoot, cfg.binaryPath || undefined).then((report) => {
+      if (report) {
+        this.statusBar.showTokenCost(report.sessionCostUSD, report.todayCostUSD);
+      }
+    });
   }
 
   private handleAnalysisError(err: unknown): void {
@@ -449,6 +459,59 @@ class ThesmosExtension implements vscode.Disposable {
   }
 }
 
+// ── Extension update check ────────────────────────────────────────────────────
+
+const UPDATE_CHECK_CACHE_KEY = 'thesmos.updateCheck';
+const UPDATE_CHECK_TTL_MS = 24 * 60 * 60 * 1000;
+
+async function checkExtensionUpdate(context: vscode.ExtensionContext): Promise<void> {
+  try {
+    // Throttle to once per 24h using globalState
+    const last = context.globalState.get<number>(UPDATE_CHECK_CACHE_KEY, 0);
+    if (Date.now() - last < UPDATE_CHECK_TTL_MS) return;
+
+    const current: string = context.extension.packageJSON.version as string;
+    if (!current) return;
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 2000);
+    const res = await fetch(
+      'https://registry.npmjs.org/thesmos-governance/latest',
+      { signal: controller.signal },
+    );
+    clearTimeout(timer);
+    if (!res.ok) return;
+
+    const data = (await res.json()) as { version?: string };
+    const latest = data.version;
+    if (!latest) return;
+
+    await context.globalState.update(UPDATE_CHECK_CACHE_KEY, Date.now());
+
+    if (latest === current) return;
+    // Simple semver: compare numeric parts
+    const parse = (v: string) => v.split('.').map(Number);
+    const [cMaj = 0, cMin = 0, cPat = 0] = parse(current);
+    const [lMaj = 0, lMin = 0, lPat = 0] = parse(latest);
+    const newer = lMaj > cMaj || (lMaj === cMaj && (lMin > cMin || (lMin === cMin && lPat > cPat)));
+    if (!newer) return;
+
+    const choice = await vscode.window.showInformationMessage(
+      `Thesmos Governance ${latest} is available (you have ${current}).`,
+      'Update Extension',
+      'Dismiss',
+    );
+    if (choice === 'Update Extension') {
+      await vscode.commands.executeCommand(
+        'workbench.extensions.action.installExtension',
+        'holley-studios.thesmos-governance',
+      );
+    }
+  } catch {
+    // Update check is best-effort; never surface errors
+  }
+}
+
 // ── VS Code entry points ──────────────────────────────────────────────────────
 
 let extension: ThesmosExtension | undefined;
@@ -467,6 +530,9 @@ export async function activate(
 
   await extension.activate();
 
+  // Non-blocking extension update check (runs after activation to stay out of the critical path)
+  void checkExtensionUpdate(context);
+
   // Start Thesmos LSP server for real-time as-you-type diagnostics.
   // The server is the thesmos CLI launched with the "lsp" subcommand.
   // It runs alongside the existing on-save analysis and surfaces squiggles
@@ -479,30 +545,25 @@ async function startLspClient(
   workspaceRoot: string,
 ): Promise<void> {
   try {
+    // Resolve the local binary before attempting to start the LSP.
+    // If thesmos-governance is not installed, bail silently — do NOT fall
+    // through to `npx thesmos` which would attempt to pull a non-existent
+    // "thesmos" package from the npm registry and crash-loop.
+    const cfg = readConfig();
+    let serverCommand: string;
+    try {
+      serverCommand = resolveBinary(workspaceRoot, cfg.binaryPath || undefined);
+    } catch {
+      // Package not installed — on-save analysis still works via diagnostics
+      return;
+    }
+
     // Dynamic import so the extension still loads even if vscode-languageclient
     // is not yet installed (e.g. first-run before `npm install`).
     const { LanguageClient, TransportKind } = await import('vscode-languageclient/node');
 
-    // Resolve the thesmos binary to use as the LSP server.
-    // VS Code launched from the Dock doesn't inherit nvm PATH, so extend it
-    // with common node version manager locations before spawning the server.
-    const home = process['env']['HOME'] ?? process['env']['USERPROFILE'] ?? '';
-    const extraPaths = [
-      `${home}/.nvm/versions/node/v20.20.2/bin`,
-      `${home}/.nvm/versions/node/v22.0.0/bin`,
-      `${home}/.nvm/versions/node/v24.0.0/bin`,
-      `${home}/.nvm/versions/node/v18.0.0/bin`,
-      `${home}/.volta/bin`,
-      `${home}/.fnm/aliases/default/bin`,
-      '/opt/homebrew/bin',
-      '/usr/local/bin',
-    ];
-    const enhancedPath = [...extraPaths, process['env']['PATH'] ?? ''].join(process.platform === 'win32' ? ';' : ':');
-    const serverEnv = { ...process['env'], PATH: enhancedPath };
-
-    const serverCommand = 'npx';
-    const serverArgs = ['thesmos', 'lsp', '--root', workspaceRoot];
-    const serverOpts = { env: serverEnv };
+    const serverArgs = ['lsp', '--root', workspaceRoot];
+    const serverOpts = { env: process['env'] as NodeJS.ProcessEnv };
 
     lspClient = new LanguageClient(
       'thesmos-lsp',

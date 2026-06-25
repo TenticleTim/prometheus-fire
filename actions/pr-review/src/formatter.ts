@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Holley Studios. All rights reserved.
 /**
  * Comment formatters for the Thesmos Governance PR Review Action.
  *
@@ -15,6 +16,9 @@ import type { Finding, InlineComment, Severity } from './types.js';
 
 export const SUMMARY_MARKER = '<!-- thesmos-governance:summary -->';
 
+/** If a rule fires on more than this many distinct files, collapse to one row. */
+const DEDUP_THRESHOLD = 3;
+
 const SEVERITY_EMOJI: Record<Severity, string> = {
   BLOCKER: '🔴',
   HIGH: '🟠',
@@ -24,9 +28,6 @@ const SEVERITY_EMOJI: Record<Severity, string> = {
 };
 
 const SEVERITY_ORDER: Severity[] = ['BLOCKER', 'HIGH', 'MEDIUM', 'LOW', 'TECH_DEBT'];
-
-// Rules firing on >DEDUP_THRESHOLD distinct files are collapsed to a single summary item.
-const DEDUP_THRESHOLD = 3;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -45,8 +46,10 @@ function groupBySeverity(findings: Finding[]): Map<Severity, Finding[]> {
   return map;
 }
 
-/** Computes a 0-100 PR health score. */
-function computeScore(findings: Finding[]): number {
+// ── Health score ──────────────────────────────────────────────────────────────
+
+/** Computes a 0–100 PR health score. BLOCKER=-15, HIGH=-3, MEDIUM=-1, floor 0. */
+export function computeScore(findings: Finding[]): number {
   let score = 100;
   for (const f of findings) {
     if (f.severity === 'BLOCKER') score -= 15;
@@ -56,15 +59,20 @@ function computeScore(findings: Finding[]): number {
   return Math.max(0, score);
 }
 
+function scoreEmoji(score: number): string {
+  if (score >= 90) return '🟢';
+  if (score >= 70) return '🟡';
+  if (score >= 50) return '🟠';
+  return '🔴';
+}
+
+// ── Dedup rendering ───────────────────────────────────────────────────────────
+
 /**
- * Renders one severity bucket's findings with deduplication.
- *
- * Same rule firing on >DEDUP_THRESHOLD distinct files → one collapsed item
- * showing a count and a bulk-fix command. Individual findings below the
- * threshold are shown per-file as before.
+ * Renders a severity bucket with per-category deduplication.
+ * Categories with >DEDUP_THRESHOLD distinct files collapse to a single row.
  */
-function renderBucket(sev: Severity, group: Finding[]): string {
-  // Group by category
+function renderBucket(group: Finding[]): string {
   const byCategory = new Map<string, Finding[]>();
   for (const f of group) {
     const existing = byCategory.get(f.category) ?? [];
@@ -73,32 +81,27 @@ function renderBucket(sev: Severity, group: Finding[]): string {
   }
 
   const rows: string[] = [];
-
   for (const [category, catFindings] of byCategory) {
     const uniqueFiles = new Set(catFindings.map((f) => f.file));
-
     if (uniqueFiles.size > DEDUP_THRESHOLD) {
-      // Collapsed summary for high-occurrence rules
-      const fileList = [...uniqueFiles].slice(0, 5).map((f) => `\`${esc(f)}\``).join(', ');
+      const fileList = [...uniqueFiles]
+        .slice(0, 5)
+        .map((f) => `\`${esc(f)}\``)
+        .join(', ');
       const moreFiles = uniqueFiles.size > 5 ? ` +${uniqueFiles.size - 5} more` : '';
-      const exampleMsg = catFindings[0]?.message ?? '';
       rows.push(
-        `- **\`${esc(category)}\`** — ${esc(exampleMsg)} ` +
-        `(**${plural(uniqueFiles.size, 'file')}**: ${fileList}${moreFiles})\n` +
-        `  > 💡 Run \`thesmos fix --rule=${esc(category)}\` to fix all automatically`,
+        `- **\`${esc(category)}\`** — ${esc(catFindings[0]?.message ?? '')} ` +
+          `(**${plural(uniqueFiles.size, 'file')}**: ${fileList}${moreFiles})\n` +
+          `  > 💡 Run \`thesmos fix --rule=${esc(category)}\` to fix all automatically`,
       );
     } else {
-      // Individual findings for low-occurrence rules
       for (const f of catFindings) {
         const loc = f.line ? `:${f.line}` : '';
         const suggestion = f.suggestion ? `\n  > 💡 ${esc(f.suggestion)}` : '';
-        rows.push(
-          `- **\`${esc(f.file)}${loc}\`** — ${esc(f.message)} \`${esc(f.category)}\`${suggestion}`,
-        );
+        rows.push(`- **\`${esc(f.file)}${loc}\`** — ${esc(f.message)} \`${esc(f.category)}\`${suggestion}`);
       }
     }
   }
-
   return rows.join('\n');
 }
 
@@ -114,9 +117,7 @@ export function formatSummaryComment(
 
   const blockers = byGroup.get('BLOCKER')?.length ?? 0;
   const highs = byGroup.get('HIGH')?.length ?? 0;
-
   const score = computeScore(findings);
-  const scoreEmoji = score >= 90 ? '🟢' : score >= 70 ? '🟡' : score >= 50 ? '🟠' : '🔴';
 
   const headerLine =
     findings.length === 0
@@ -128,20 +129,29 @@ export function formatSummaryComment(
     return `| ${SEVERITY_EMOJI[sev]} ${sev} | ${count === 0 ? '—' : `**${count}**`} |`;
   }).join('\n');
 
+  const scoreEmoji_ = scoreEmoji(score);
+  const scoreLine = `**PR Score: ${scoreEmoji_} ${score}/100**`;
+
+  const scoreNote =
+    blockers > 0
+      ? ` — ${plural(blockers, 'blocker')} must be fixed before merge.`
+      : highs > 0
+        ? ` — ${plural(highs, 'high-severity finding')} should be reviewed.`
+        : findings.length === 0
+          ? ' — clean.'
+          : ` — ${plural(findings.length, 'finding')} noted.`;
+
   const findingSections =
     findings.length === 0
       ? ''
       : SEVERITY_ORDER.filter((sev) => (byGroup.get(sev)?.length ?? 0) > 0)
           .map((sev) => {
             const group = byGroup.get(sev) ?? [];
-            const rows = renderBucket(sev, group);
-
-            // BLOCKER and HIGH are expanded by default; others collapsed.
-            const isExpanded = sev === 'BLOCKER' || sev === 'HIGH';
-            const openAttr = isExpanded ? ' open' : '';
-
+            const rows = renderBucket(group);
+            // BLOCKER + HIGH expand by default; others collapsed
+            const open = sev === 'BLOCKER' || sev === 'HIGH' ? ' open' : '';
             return (
-              `<details${openAttr}>\n` +
+              `<details${open}>\n` +
               `<summary>${SEVERITY_EMOJI[sev]} <strong>${sev}</strong> &nbsp;·&nbsp; ${plural(group.length, 'finding')}</summary>\n\n` +
               `${rows}\n\n` +
               `</details>`
@@ -158,18 +168,15 @@ export function formatSummaryComment(
           ? `> ✅ No governance violations found.`
           : `> ℹ️ ${plural(findings.length, 'finding')} found — no blockers.`;
 
-  const scoreSection =
-    findings.length === 0
-      ? ''
-      : `\n**PR Score: ${scoreEmoji} ${score}/100**\n`;
-
   return [
     SUMMARY_MARKER,
     `## 🔱 Thesmos Governance Review`,
     ``,
     status,
-    scoreSection,
+    ``,
     headerLine,
+    ``,
+    `${scoreLine}${scoreNote}`,
     ``,
     `| Severity | Count |`,
     `|----------|-------|`,
@@ -178,7 +185,8 @@ export function formatSummaryComment(
     findingSections,
     ``,
     `---`,
-    `<sub>🔱 **Thesmos Governance** by Holley Studios · PR #${prNumber} in \`${repoName}\` · [SARIF audit trail](https://docs.github.com/en/code-security/code-scanning) available via \`thesmos validate --sarif\` (EU AI Act Art. 12)</sub>`,
+    `<sub>🔱 **Thesmos Governance** by Holley Studios · PR #${prNumber} in \`${repoName}\` · ` +
+      `[EU AI Act Art. 12](https://holley.studio/thesmos/compliance) SARIF export: \`thesmos validate --sarif\`</sub>`,
   ]
     .filter((l) => l !== undefined)
     .join('\n');
@@ -213,8 +221,7 @@ export function formatInlineComment(finding: Finding): string {
  * Only includes findings that:
  *   1. Have a line number
  *   2. Are in a file that was part of the PR diff
- *   3. Come from a rule that fires on ≤DEDUP_THRESHOLD files (bulk rules
- *      are surfaced in the summary comment instead of flooding the diff view)
+ *   3. Are NOT in a category that spans >DEDUP_THRESHOLD files (bulk noise suppressed)
  *
  * Files and line numbers outside the diff will cause a 422 from GitHub.
  * We return comments for changed files only; the caller wraps the API
@@ -224,16 +231,15 @@ export function buildInlineComments(
   findings: Finding[],
   changedFilePaths: Set<string>,
 ): InlineComment[] {
-  // Identify bulk rules (firing on too many files) — inline comments for
-  // these would overwhelm the diff view; they appear in the summary instead.
-  const fileCountByCategory = new Map<string, Set<string>>();
+  // Identify categories that are bulk (suppress from inline diff view)
+  const categoryFileCounts = new Map<string, Set<string>>();
   for (const f of findings) {
-    const files = fileCountByCategory.get(f.category) ?? new Set<string>();
-    files.add(f.file);
-    fileCountByCategory.set(f.category, files);
+    const set = categoryFileCounts.get(f.category) ?? new Set();
+    set.add(f.file);
+    categoryFileCounts.set(f.category, set);
   }
   const bulkCategories = new Set(
-    [...fileCountByCategory.entries()]
+    [...categoryFileCounts.entries()]
       .filter(([, files]) => files.size > DEDUP_THRESHOLD)
       .map(([cat]) => cat),
   );

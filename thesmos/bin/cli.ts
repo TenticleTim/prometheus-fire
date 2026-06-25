@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Holley Studios. All rights reserved.
 /**
  * Thesmos CLI entry point.
  * Dispatches to command handlers; each handler is a thin wrapper over core modules.
@@ -50,6 +51,9 @@ import { cmdDeps } from './commands/deps.ts';
 import { cmdCompliance } from './commands/compliance.ts';
 import { cmdAiFingerprint } from './commands/ai-fingerprint.ts';
 import { cmdPantheon } from './commands/pantheon.ts';
+import { cmdProfile } from './commands/profile.ts';
+import { cmdSuppress } from './commands/suppress.ts';
+import { cmdVault } from './commands/secrets.ts';
 import { cmdNotify } from './commands/notify.ts';
 import { cmdGithubComment } from './commands/github-comment.ts';
 import { cmdSelf } from './commands/self.ts';
@@ -61,6 +65,7 @@ import { cmdScore } from './commands/score.ts';
 import { cmdCompile } from './commands/compile.ts';
 import { startLspServer } from '../lang-server.ts';
 import { makeLogger } from '../logger.ts';
+import { checkForUpdate } from './lib/update-check.ts';
 
 const log = makeLogger('cli');
 
@@ -157,6 +162,7 @@ const COMMANDS: Record<string, (argv: string[]) => Promise<void>> = {
   'vercel:lint':            (argv) => cmdVercelLint(argv),
   'context:snapshot':       (argv) => cmdContext(['snapshot', ...argv]),
   'context:health':         (argv) => cmdContext(['health', ...argv]),
+  'context:compact':        (argv) => cmdContext(['compact', ...argv]),
   'github:comment':         (argv) => cmdGithubComment(argv),
   'self:check':             (argv) => cmdSelf(['check', ...argv]),
   'self:update':            (argv) => cmdSelf(['update', ...argv]),
@@ -190,6 +196,22 @@ const COMMANDS: Record<string, (argv: string[]) => Promise<void>> = {
   compile:                  (argv) => cmdCompile(argv),
   notify:                   (argv) => cmdNotify(argv),
   'pantheon:council':       (argv) => cmdPantheon(['council', ...argv]),
+  'profile:init':           (argv) => cmdProfile('init', argv),
+  'profile:view':           (argv) => cmdProfile('view', argv),
+  'profile:correct':        (argv) => cmdProfile('correct', argv),
+  'profile:disable':        (argv) => cmdProfile('disable', argv),
+  'profile:enable':         (argv) => cmdProfile('enable', argv),
+  'profile:set':            (argv) => cmdProfile('set', argv),
+  'profile:reset':          (argv) => cmdProfile('reset', argv),
+  'suppress':               (argv) => cmdSuppress(argv),
+  'secrets:vault':          (argv) => cmdVault('list', argv),
+  'secrets:vault:init':     (argv) => cmdVault('init', argv),
+  'secrets:vault:set':      (argv) => cmdVault('set', argv),
+  'secrets:vault:get':      (argv) => cmdVault('get', argv),
+  'secrets:vault:list':     (argv) => cmdVault('list', argv),
+  'secrets:vault:delete':   (argv) => cmdVault('delete', argv),
+  'secrets:vault:inject':   (argv) => cmdVault('inject', argv),
+  'secrets:vault:destroy':  (argv) => cmdVault('destroy', argv),
 };
 
 const argv = process.argv.slice(2); // ['command', ...flags]
@@ -415,6 +437,15 @@ EXPLAIN & DISCOVER
   explain finding <fp>     Rule for a baseline fingerprint
   explain --list           All rules with severity and description
 
+SECRETS VAULT  (local encrypted secrets — never transmitted)
+  secrets:vault init              Create vault + store master key in system keychain
+  secrets:vault set <KEY> [VAL]   Encrypt and store a secret (prompts if VAL omitted)
+  secrets:vault get <KEY>         Decrypt and print a secret value
+  secrets:vault list              List key names and timestamps (values never shown)
+  secrets:vault delete <KEY>      Remove a secret
+  secrets:vault inject            List keys, or use --export for shell-sourceable export
+  secrets:vault destroy           Permanently delete vault + keychain entry
+
 FIX
   fix                      Auto-fix safe violations (dry-run by default)
     --apply                  Write changes to disk
@@ -489,9 +520,13 @@ if (!handler) {
 const cliStart = Date.now();
 log.info('command start', { command });
 
+// Skip update check for machine-readable commands and update itself
+const SKIP_UPDATE_CHECK = new Set(['tokens:report', 'health', 'self:check', 'self:update', 'profile:view']);
+
 handler(argv.slice(1))
   .then(() => {
     log.info('command complete', { command, durationMs: Date.now() - cliStart });
+    if (!SKIP_UPDATE_CHECK.has(command)) void checkForUpdate();
   })
   .catch((err: unknown) => {
     const msg = err instanceof Error ? err.message : String(err);
