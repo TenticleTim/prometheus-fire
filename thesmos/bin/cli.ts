@@ -50,6 +50,7 @@ import { cmdDeps } from './commands/deps.ts';
 import { cmdCompliance } from './commands/compliance.ts';
 import { cmdAiFingerprint } from './commands/ai-fingerprint.ts';
 import { cmdPantheon } from './commands/pantheon.ts';
+import { cmdNotify } from './commands/notify.ts';
 import { cmdGithubComment } from './commands/github-comment.ts';
 import { cmdSelf } from './commands/self.ts';
 import { cmdBrain } from './commands/brain.ts';
@@ -187,6 +188,8 @@ const COMMANDS: Record<string, (argv: string[]) => Promise<void>> = {
   eval:                     (argv) => cmdEval(argv),
   score:                    (argv) => cmdScore(argv),
   compile:                  (argv) => cmdCompile(argv),
+  notify:                   (argv) => cmdNotify(argv),
+  'pantheon:council':       (argv) => cmdPantheon(['council', ...argv]),
 };
 
 const argv = process.argv.slice(2); // ['command', ...flags]

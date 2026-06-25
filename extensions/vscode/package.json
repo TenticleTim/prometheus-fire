@@ -216,6 +216,12 @@
         "title": "Lint Vercel Deployment Config",
         "category": "Thesmos",
         "icon": "$(cloud)"
+      },
+      {
+        "command": "thesmos.agents.invoke",
+        "title": "Invoke Agent",
+        "category": "Thesmos Agents",
+        "icon": "$(play)"
       }
     ],
     "viewsContainers": {
@@ -238,6 +244,11 @@
           "id": "thesmos.autopilotView",
           "name": "Autopilot",
           "icon": "$(rocket)"
+        },
+        {
+          "id": "thesmos.agentsView",
+          "name": "Agents",
+          "icon": "$(person-add)"
         }
       ]
     },

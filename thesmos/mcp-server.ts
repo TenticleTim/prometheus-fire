@@ -150,6 +150,17 @@ const TOOL_DEFINITIONS = [
     },
   },
   {
+    name: 'get_active_agents',
+    description:
+      'Returns all 40 Pantheon agents with their domains, roles, mythology, and invocation instructions. Use this to discover which agent to invoke for a given task domain.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        domain: { type: 'string', description: 'Optional domain filter (e.g. "marketing", "security", "finance"). Omit to return all agents.' },
+      },
+    },
+  },
+  {
     name: 'check_path',
     description:
       'Validate a file path BEFORE writing, editing, or deleting. Returns { allowed: true } if safe, or { allowed: false, rule, message } if blocked by governance policy. Call this before every file-system mutation. Result is logged to .thesmos/governance.log.jsonl.',
@@ -380,6 +391,74 @@ function handleCheckModelCost(params: { tokens: number }): unknown {
   return { text: [`Estimated cost for ${t.toLocaleString()} tokens:`, ...rows].join('\n') };
 }
 
+// ── Pantheon agent catalog ────────────────────────────────────────────────────
+
+const PANTHEON_AGENTS_STATIC = [
+  { id: 'zeus-executive-agent',       name: 'Zeus',        domain: 'executive',    role: 'Executive Orchestration',       model: 'claude-opus-4-8' },
+  { id: 'athena-strategy-agent',      name: 'Athena',      domain: 'strategy',     role: 'Business Strategy & GTM',       model: 'claude-opus-4-8' },
+  { id: 'hermes-marketing-agent',     name: 'Hermes',      domain: 'marketing',    role: 'Marketing Strategy & Growth',   model: 'claude-sonnet-4-6' },
+  { id: 'argus-security-agent',       name: 'Argus',       domain: 'security',     role: 'Security & Threat Modeling',    model: 'claude-opus-4-8' },
+  { id: 'ares-sales-agent',           name: 'Ares',        domain: 'sales',        role: 'Sales Strategy & Closing',      model: 'claude-sonnet-4-6' },
+  { id: 'aphrodite-creative-agent',   name: 'Aphrodite',   domain: 'creative',     role: 'Creative Direction & Brand',    model: 'claude-sonnet-4-6' },
+  { id: 'hephaestus-design-agent',    name: 'Hephaestus',  domain: 'design',       role: 'UI/UX & Design Systems',        model: 'claude-sonnet-4-6' },
+  { id: 'themis-legal-agent',         name: 'Themis',      domain: 'legal',        role: 'Legal Strategy & Contracts',    model: 'claude-sonnet-4-6' },
+  { id: 'tyche-analytics-agent',      name: 'Tyche',       domain: 'analytics',    role: 'Analytics & KPIs',              model: 'claude-sonnet-4-6' },
+  { id: 'plutus-finance-agent',       name: 'Plutus',      domain: 'finance',      role: 'Finance, Pricing & Unit Econ',  model: 'claude-sonnet-4-6' },
+  { id: 'pheme-pr-agent',             name: 'Pheme',       domain: 'pr',           role: 'PR & Communications',           model: 'claude-sonnet-4-6' },
+  { id: 'apollo-content-agent',       name: 'Apollo',      domain: 'content',      role: 'Content & Copywriting',         model: 'claude-sonnet-4-6' },
+  { id: 'daedalus-product-agent',     name: 'Daedalus',    domain: 'product',      role: 'Product Management',            model: 'claude-sonnet-4-6' },
+  { id: 'hera-operations-agent',      name: 'Hera',        domain: 'operations',   role: 'Operations & HR',               model: 'claude-sonnet-4-6' },
+  { id: 'nike-leadgen-agent',         name: 'Nike',        domain: 'leadgen',      role: 'Lead Generation & Pipeline',    model: 'claude-sonnet-4-6' },
+  { id: 'heracles-bd-agent',          name: 'Heracles',    domain: 'bd',           role: 'Business Dev & Partnerships',   model: 'claude-sonnet-4-6' },
+  { id: 'mnemosyne-knowledge-agent',  name: 'Mnemosyne',   domain: 'knowledge',    role: 'Knowledge Management',          model: 'claude-sonnet-4-6' },
+  { id: 'hestia-cx-agent',            name: 'Hestia',      domain: 'cx',           role: 'Customer Experience',           model: 'claude-sonnet-4-6' },
+  { id: 'demeter-cs-agent',           name: 'Demeter',     domain: 'cs',           role: 'Customer Success',              model: 'claude-sonnet-4-6' },
+  { id: 'psyche-research-agent',      name: 'Psyche',      domain: 'research',     role: 'UX Research & Insights',        model: 'claude-sonnet-4-6' },
+  { id: 'nemesis-compliance-agent',   name: 'Nemesis',     domain: 'compliance',   role: 'Compliance & GRC',              model: 'claude-sonnet-4-6' },
+  { id: 'pythia-data-agent',          name: 'Pythia',      domain: 'data',         role: 'Data & Business Intelligence',  model: 'claude-sonnet-4-6' },
+  { id: 'dionysus-video-agent',       name: 'Dionysus',    domain: 'video',        role: 'Video Production',              model: 'claude-haiku-4-5-20251001' },
+  { id: 'morpheus-animation-agent',   name: 'Morpheus',    domain: 'animation',    role: 'Animation & Motion',            model: 'claude-haiku-4-5-20251001' },
+  { id: 'artemis-photography-agent',  name: 'Artemis',     domain: 'photography',  role: 'Photography & Art Direction',   model: 'claude-haiku-4-5-20251001' },
+  { id: 'dike-ethics-agent',          name: 'Dike',        domain: 'ethics',       role: 'Ethics & AI Responsibility',    model: 'claude-sonnet-4-6' },
+  { id: 'aether-ai-strategy-agent',   name: 'Aether',      domain: 'ai-strategy',  role: 'AI Strategy & Implementation',  model: 'claude-sonnet-4-6' },
+  { id: 'calliope-email-agent',       name: 'Calliope',    domain: 'email',        role: 'Email & Newsletter',            model: 'claude-haiku-4-5-20251001' },
+  { id: 'cassandra-qa-agent',         name: 'Cassandra',   domain: 'qa',           role: 'QA & Testing',                  model: 'claude-sonnet-4-6' },
+  { id: 'chiron-architecture-agent',  name: 'Chiron',      domain: 'architecture', role: 'Software Architecture',         model: 'claude-sonnet-4-6' },
+  { id: 'clio-case-study-agent',      name: 'Clio',        domain: 'case-studies', role: 'Case Studies & Social Proof',   model: 'claude-haiku-4-5-20251001' },
+  { id: 'eos-automation-agent',       name: 'Eos',         domain: 'automation',   role: 'Automation & Workflows',        model: 'claude-sonnet-4-6' },
+  { id: 'erato-brand-voice-agent',    name: 'Erato',       domain: 'brand-voice',  role: 'Brand Voice & Tone',            model: 'claude-haiku-4-5-20251001' },
+  { id: 'kratos-devops-agent',        name: 'Kratos',      domain: 'devops',       role: 'DevOps & Infrastructure',       model: 'claude-sonnet-4-6' },
+  { id: 'metis-pm-agent',             name: 'Metis',       domain: 'pm',           role: 'Project Management',            model: 'claude-sonnet-4-6' },
+  { id: 'momus-challenger-agent',     name: 'Momus',       domain: 'challenger',   role: 'Devil\'s Advocate & Critique',  model: 'claude-sonnet-4-6' },
+  { id: 'polyhymnia-docs-agent',      name: 'Polyhymnia',  domain: 'docs',         role: 'Documentation & Technical Docs',model: 'claude-haiku-4-5-20251001' },
+  { id: 'proteus-drift-agent',        name: 'Proteus',     domain: 'drift',        role: 'Scope Drift Detection',         model: 'claude-sonnet-4-6' },
+  { id: 'talos-web-dev-agent',        name: 'Talos',       domain: 'web-dev',      role: 'Web Development',               model: 'claude-sonnet-4-6' },
+  { id: 'coeus-ideation-agent',       name: 'Coeus',       domain: 'ideation',     role: 'Ideation & Brainstorming',      model: 'claude-sonnet-4-6' },
+];
+
+function handleGetActiveAgents(domainFilter?: string): unknown {
+  const agents = domainFilter
+    ? PANTHEON_AGENTS_STATIC.filter(a =>
+        a.domain.includes(domainFilter) ||
+        a.role.toLowerCase().includes(domainFilter) ||
+        a.name.toLowerCase().includes(domainFilter))
+    : PANTHEON_AGENTS_STATIC;
+
+  return {
+    total: PANTHEON_AGENTS_STATIC.length,
+    filtered: agents.length,
+    agents: agents.map(a => ({
+      id: a.id,
+      name: a.name,
+      domain: a.domain,
+      role: a.role,
+      model: a.model,
+      invoke: `Agent({ subagent_type: "${a.id}", prompt: "<your task>" })`,
+    })),
+    usage: 'Pass subagent_type to the Agent tool with a task prompt. Use domain filter to narrow by specialty.',
+  };
+}
+
 // ── Resource handlers ─────────────────────────────────────────────────────────
 
 function handleResourceRead(root: string, uri: string): unknown {
@@ -490,6 +569,11 @@ function dispatch(root: string, request: JsonRpcRequest): JsonRpcResponse {
             const gsConfig = (() => { try { return loadConfig(root) as unknown as Record<string, unknown>; } catch { return {} as Record<string, unknown>; } })();
             const status = getAutoModeGovernanceInfo(root, gsConfig);
             return respond({ content: [{ type: 'text', text: JSON.stringify(status, null, 2) }] });
+          }
+          case 'get_active_agents': {
+            const domainFilter = (toolInput['domain'] as string | undefined)?.toLowerCase();
+            const result = handleGetActiveAgents(domainFilter);
+            return respond({ content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] });
           }
           default:
             return error(-32601, `Unknown tool: ${name}`);

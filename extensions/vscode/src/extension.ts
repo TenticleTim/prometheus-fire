@@ -27,6 +27,7 @@ import { StatusBarManager } from './statusBar.js';
 import { FindingsTreeProvider } from './treeView.js';
 import { AutopilotWatcher } from './autopilotWatcher.js';
 import { AutopilotTreeProvider } from './autopilotView.js';
+import { AgentsTreeProvider, invokeAgentCommand } from './agentsPanel.js';
 import { AutoModeGovernor } from './autoModeGovernor.js';
 import { ThesmosCodeLensProvider } from './codeLens.js';
 import { InlineDiagnosticsManager } from './inlineDiagnostics.js';
@@ -68,6 +69,7 @@ class ThesmosExtension implements vscode.Disposable {
   private readonly treeProvider: FindingsTreeProvider;
   private readonly autopilotWatcher: AutopilotWatcher;
   private readonly autopilotView: AutopilotTreeProvider;
+  private readonly agentsView: AgentsTreeProvider;
   private readonly autoModeGovernor: AutoModeGovernor;
   private readonly codeLensProvider: ThesmosCodeLensProvider;
   private readonly inlineDiagnostics: InlineDiagnosticsManager;
@@ -88,6 +90,7 @@ class ThesmosExtension implements vscode.Disposable {
     this.treeProvider = new FindingsTreeProvider();
     this.autopilotWatcher = new AutopilotWatcher(workspaceRoot);
     this.autopilotView = new AutopilotTreeProvider(workspaceRoot, this.autopilotWatcher);
+    this.agentsView = new AgentsTreeProvider();
     this.autoModeGovernor = new AutoModeGovernor(workspaceRoot);
     this.codeLensProvider = new ThesmosCodeLensProvider();
     this.inlineDiagnostics = new InlineDiagnosticsManager();
@@ -98,6 +101,7 @@ class ThesmosExtension implements vscode.Disposable {
       this.treeProvider,
       this.autopilotWatcher,
       this.autopilotView,
+      this.agentsView,
       this.autoModeGovernor,
       this.codeLensProvider,
       this.inlineDiagnostics,
@@ -161,6 +165,18 @@ class ThesmosExtension implements vscode.Disposable {
       showCollapseAll: false,
     });
     this.disposables.push(autopilotTreeView);
+
+    // Register agents tree view
+    const agentsTreeView = vscode.window.createTreeView('thesmos.agentsView', {
+      treeDataProvider: this.agentsView,
+      showCollapseAll: true,
+    });
+    this.disposables.push(agentsTreeView);
+
+    // Agents invoke command
+    this.disposables.push(
+      vscode.commands.registerCommand('thesmos.agents.invoke', invokeAgentCommand),
+    );
 
     // Set context flag so tree view & menus are visible
     await vscode.commands.executeCommand(
