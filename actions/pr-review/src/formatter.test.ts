@@ -172,7 +172,7 @@ describe('formatSummaryComment — all severities', () => {
   it('omits finding sections for zero-count severities in details', () => {
     const out = formatSummaryComment([blocker], 'repo', 1);
     // Only BLOCKER has findings so only one <details> section should appear
-    const detailsCount = (out.match(/<details>/g) ?? []).length;
+    const detailsCount = (out.match(/<details/g) ?? []).length;
     expect(detailsCount).toBe(1);
   });
 });
